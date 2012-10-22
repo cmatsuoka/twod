@@ -1,0 +1,29 @@
+#ifndef TWODBACKGROUND_H
+#define TWODBACKGROUND_H
+
+#include<allegro5/allegro.h>
+#include "color.h"
+#include "image.h"
+
+class twoDBackground {
+private:
+	twoDImage *image;
+	twoDColor *color;
+
+public:
+	twoDBackground(twoDImage*);
+	twoDBackground(twoDColor*);
+	twoDBackground(twoDColor*,twoDImage*);
+	~twoDBackground();
+
+	void draw();
+	twoDColor* removeColor();
+	twoDImage* removeImage();
+
+	// setters	
+	void setColor(twoDColor *c){ this->color = c; }
+	void setImage(twoDImage *i){ this->image = i; }
+};
+
+#endif
+
