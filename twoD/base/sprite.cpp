@@ -3,7 +3,6 @@
 twoDSprite::~twoDSprite(){
 	for(int i=0; i<this->numImg; i++)
 		delete this->image[i];
-	delete this->size;
 }
 
 // Format:
@@ -24,7 +23,6 @@ twoDSprite::twoDSprite(string spritefile){
 	string imgfile;
 	twoDImage **image;
 	twoDImage *tmpImage;
-	twoDSize *size;
 	twoDColor *alpha;
 
 	f.open(spritefile.c_str(), fstream::in);
@@ -33,7 +31,6 @@ twoDSprite::twoDSprite(string spritefile){
 	f >> w >> h;
 	f >> alphaR >> alphaG >> alphaB;
 
-	size = new twoDSize(w, h);
 	alpha = new twoDColor(alphaR, alphaG, alphaB);
 
 	image = (twoDImage**)malloc(sizeof(twoDImage*) * numImg);
@@ -45,7 +42,7 @@ twoDSprite::twoDSprite(string spritefile){
 		tmpImage = new twoDImage(imgfile);
 		for(int j=0; j<numSubImg; j++){
 			f >> x >> y;
-			image[k] = tmpImage->subImage(new twoDPosition(x, y), size);
+			image[k] = tmpImage->subImage(x, y, w, h);
 			if(alphaR >= 0)
 				image[k]->setAlpha(alpha);
 			k++;
@@ -57,39 +54,32 @@ twoDSprite::twoDSprite(string spritefile){
 
 	delete alpha;
 
-	this->size = size;
+	this->x = 0;
+	this->y = 0;
+	this->width = w;
+	this->height = h;
 	this->image = image;
-	this->position = new twoDPosition(0, 0);
 	this->numImg = numImg;
 	this->switchRatio = switchRatio;
 	this->switchCount = 0;
 	this->imgCount = 0;
 }
 
-twoDPosition * twoDSprite::getPosition(){
-	return this->position;
-}
-
-void twoDSprite::setPosition(twoDPosition *position){
-	this->position = position;   
-}
-
 void twoDSprite::draw(){
-	this->image[this->imgCount]->draw(this->position);
+	this->image[this->imgCount]->setPosition(this->x, this->y);
+	this->image[this->imgCount]->draw();
 
 	this->switchCount++;
-	if(this->switchCount == this->switchRatio){
+	if(this->switchCount >= this->switchRatio){
 		this->imgCount = (this->imgCount + 1) % this->numImg;
 		this->switchCount = 0;
 	}
 }
 
-void twoDSprite::draw(twoDPosition *position){
-	this->setPosition(position);
-	this->draw();
-}
-
-twoDSize* twoDSprite::getSize(){
-	return this->size;
+void twoDSprite::setSize(int w, int h){
+	for(int i=0; i<this->numImg; i++)
+		this->image[i]->setSize(w, h);
+	this->width = w;
+	this->height = h;
 }
 

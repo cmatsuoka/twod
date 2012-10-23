@@ -17,6 +17,7 @@ using namespace std;
 
 #define TWOD_FPS 30
 #define TWOD_LAYERS 16
+#define TWOD_OBJ_PER_LAYER 16
 
 enum TWOD_KEYS {
 	KEY_UP, KEY_DOWN, KEY_LEFT, KEY_RIGHT, KEY_SPACE, KEY_ESCAPE, KEY_ENTER,
@@ -34,7 +35,7 @@ private:
 	bool key[TWOD_KEYS_COUNT];
 	bool end;
 	twoDBackground *background;
-	twoDObject *layer[TWOD_LAYERS][TWOD_LAYERS];
+	twoDObject *layer[TWOD_LAYERS][TWOD_OBJ_PER_LAYER];
 
 public:
 	twoDEngine(int width, int height);

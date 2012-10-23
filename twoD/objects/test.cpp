@@ -1,28 +1,42 @@
 #include "test.h"
 
-twoDTest::twoDTest(twoDSprite *sprite, twoDPosition *position){
+twoDTest::twoDTest(twoDSprite *sprite, twoDText *text, int x, int y){
 	this->sprite = sprite;
-	this->position = position;
+	this->text = text;
+	this->text->setAlign(TWOD_TEXT_ALIGN_CENTER);
+	this->x = x;
+	this->y = y;
+	this->width = sprite->getWidth();
+	this->height = sprite->getHeight();
 	this->visible = true;
 	this->collidable = true;
 	this->state = TWOD_STATE_STANDING;
-	this->size = sprite->getSize();
 }
 
 void twoDTest::draw(){
-	if(this->visible)
-		this->sprite->draw(this->position);
+	if(this->visible){
+		this->sprite->draw();
+		this->text->draw();
+	}
 }
 
 void twoDTest::update(twoDEngine *engine){
+	int textX, textY;
+
 	if(engine->keyPressed(KEY_UP))
-		this->position->moveY(-10);
+		this->y += -10;
 	if(engine->keyPressed(KEY_DOWN))
-		this->position->moveY(10);
+		this->y += 10;
 	if(engine->keyPressed(KEY_LEFT))
-		this->position->moveX(-10);
+		this->x += -10;
 	if(engine->keyPressed(KEY_RIGHT))
-		this->position->moveX(10);
+		this->x += 10;
+
+	textX = this->x + (this->width / 2);
+	textY = this->y + ((this-> height - this->text->getSize()) / 2);
+
+	this->sprite->setPosition(this->x, this->y);
+	this->text->setPosition(textX, textY);
 }
 
 void twoDTest::collision(twoDObject *obj){

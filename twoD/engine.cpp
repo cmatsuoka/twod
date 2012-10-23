@@ -10,7 +10,7 @@ twoDEngine::twoDEngine(int width, int height){
 		this->key[i] = false;
 
 	for(int i=0; i<TWOD_LAYERS; i++)
-		for(int j=0; j<TWOD_LAYERS; j++)
+		for(int j=0; j<TWOD_OBJ_PER_LAYER; j++)
 			this->layer[i][j] = NULL;
 
 	this->end = false;
@@ -33,7 +33,7 @@ bool twoDEngine::addObject(twoDObject *obj, int layer){
 
 bool twoDEngine::addObject(twoDObject *obj){
 	int layer = obj->getLayer();
-	for(int i=0; i<TWOD_LAYERS; i++)
+	for(int i=0; i<TWOD_OBJ_PER_LAYER; i++)
 		if(this->layer[layer][i] == NULL){
 			this->layer[layer][i] = obj;
 			return true;
@@ -68,7 +68,7 @@ void twoDEngine::main(){
 
 			// draw all objects in layer order
 			for(int i=0; i<TWOD_LAYERS; i++)
-				for(int j=0; j<TWOD_LAYERS; j++)
+				for(int j=0; j<TWOD_OBJ_PER_LAYER; j++)
 					if(this->layer[i][j] != NULL)
 						this->layer[i][j]->draw();
 					else
@@ -84,7 +84,7 @@ void twoDEngine::main(){
 		if(event.type == ALLEGRO_EVENT_TIMER){
 			// update all objects in layer order
 			for(int i=0; i<TWOD_LAYERS; i++)
-				for(int j=0; j<TWOD_LAYERS; j++)
+				for(int j=0; j<TWOD_OBJ_PER_LAYER; j++)
 					if(this->layer[i][j] != NULL)
 						this->layer[i][j]->update(this);
 					else

@@ -10,8 +10,8 @@ using namespace std;
 class twoDSprite {
 private:
 	twoDImage **image;
-	twoDPosition *position;
-	twoDSize *size;
+	int x, y;
+	int width, height;
 	int numImg;
 	int switchRatio;
 	int switchCount;
@@ -21,13 +21,18 @@ public:
 	twoDSprite(string); // sprite definition file
 	~twoDSprite();
 
-	void setPosition(twoDPosition*); // puts image in another position
-	void setSwitchRatio(int);
-	twoDPosition * getPosition();
-	twoDSize* getSize();
+	void draw(); // draw sprite
 
-	void draw(); // draw image
-	void draw(twoDPosition*); // draw image in a new position
+	// setters
+	void setSize(int,int);
+	void setPosition(int x, int y){ this->x = x; this->y = y; }
+	void setSwitchRatio(int s){ this->switchRatio = s; }
+
+	// getters
+	int getX(){ return this->x; }
+	int getY(){ return this->y; }
+	int getWidth(){ return this->width; }
+	int getHeight(){ return this->height; }
 };
 
 #endif

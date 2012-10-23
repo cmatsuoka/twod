@@ -7,8 +7,8 @@
 
 class twoDBackground {
 private:
-	twoDImage *image;
-	twoDColor *color;
+	twoDImage *image; // background image
+	twoDColor *color; // background color
 
 public:
 	twoDBackground(twoDImage*);

@@ -1,5 +1,7 @@
 #include "image.h"
 
+static bool ALLEGRO_IMAGE_ADDON_INIT = false;
+
 twoDImage::~twoDImage(){
 	al_destroy_bitmap(this->bitmap);
 }
@@ -7,103 +9,73 @@ twoDImage::~twoDImage(){
 twoDImage::twoDImage(string imgfile){
 	int w, h;
 
-	al_init_image_addon();
+	if(!ALLEGRO_IMAGE_ADDON_INIT)
+		al_init_image_addon();
 
 	this->bitmap = al_load_bitmap(imgfile.c_str());
-	this->position = new twoDPosition(0,0);
-
 	w = al_get_bitmap_width(this->bitmap);
 	h = al_get_bitmap_height(this->bitmap);
-	this->size = new twoDSize(w,h);
-	this->drawSize = NULL;
+
+	this->x = 0;
+	this->y = 0;
+	this->width = w;
+	this->height = h;
 }
 
 twoDImage::twoDImage(ALLEGRO_BITMAP *bitmap){
 	int w, h;
 
 	this->bitmap = al_clone_bitmap(bitmap);
-	this->position = new twoDPosition(0,0);
-
 	w = al_get_bitmap_width(this->bitmap);
 	h = al_get_bitmap_height(this->bitmap);
-	this->size = new twoDSize(w,h);
-	this->drawSize = NULL;
-}
 
-twoDSize * twoDImage::getSize(){
-	return this->size;
-}
-
-twoDPosition * twoDImage::getPosition(){
-	return this->position;
-}
-
-void twoDImage::setPosition(twoDPosition *position){
-	this->position = position;   
+	this->x = 0;
+	this->y = 0;
+	this->width = w;
+	this->height = h;
 }
 
 void twoDImage::draw(){
-	int x, y;
-	x = this->position->getX();
-	y = this->position->getY();
-	if(this->drawSize == NULL)
-		al_draw_bitmap(this->bitmap, x, y, 0);
-	else {
-		int sw, sh, dw, dh;
-		float ratio = 0;
-		sw = this->size->getWidth();
-		sh = this->size->getHeight();
-		dw = this->drawSize->getWidth();
-		dh = this->drawSize->getHeight();
+	int w, h;
+	w = al_get_bitmap_width(this->bitmap);
+	h = al_get_bitmap_height(this->bitmap);
 
-		if(dw == 0){
-			ratio = (float)dh/sh;
-			dw = sw*ratio;
-		}
-		else if(dh == 0){
-			ratio = (float)dw/sw;
-			dh = sh*ratio;
-		}
-		if(ratio == 0){
-			dw = sw;
-			dh = sh;
-		}
+	if((this->width == w) && (this->height == h))
+		al_draw_bitmap(this->bitmap, this->x, this->y, 0);
+	else 
+		al_draw_scaled_bitmap(this->bitmap, 0, 0, w, h, this->x, this->y, this->width, this->height, 0);
+}
 
-		al_draw_scaled_bitmap(this->bitmap, 0, 0, sw, sh, x, y, dw, dh, 0);
+void twoDImage::setSize(int dw, int dh){
+	int sw, sh;
+	float ratio = 0;
+	sw = this->width;
+	sh = this->height;
+
+	if(dw == 0){
+		ratio = (float)dh/sh;
+		dw = sw*ratio;
 	}
-}
+	else if(dh == 0){
+		ratio = (float)dw/sw;
+		dh = sh*ratio;
+	}
+	else
+		ratio = 1;
+	if(ratio == 0){
+		dw = sw;
+		dh = sh;
+	}
 
-void twoDImage::draw(twoDPosition *position){
-	this->setPosition(position);
-	this->draw();
-}
-
-void twoDImage::draw(twoDSize *size){
-	this->setDrawSize(size);
-	this->draw();
-}
-
-void twoDImage::draw(twoDPosition *position, twoDSize *size){
-	this->setPosition(position);
-	this->setDrawSize(size);
-	this->draw();
+	this->width = dw;
+	this->height = dh;
 }
 
 void twoDImage::setAlpha(twoDColor *color){
 	al_convert_mask_to_alpha(this->bitmap, color->map());
 }
 
-void twoDImage::setDrawSize(twoDSize *size){
-	this->drawSize = size;
-} 
-
-twoDImage * twoDImage::subImage(twoDPosition *position, twoDSize *size){
-	int x, y, w, h;
-
-	x = position->getX();
-	y = position->getY();
-	w = size->getWidth();
-	h = size->getHeight();
+twoDImage * twoDImage::subImage(int x, int y, int w, int h){
 	return new twoDImage(al_create_sub_bitmap(this->bitmap, x, y, w, h));
 }
 
