@@ -9,8 +9,10 @@ twoDImage::~twoDImage(){
 twoDImage::twoDImage(string imgfile){
 	int w, h;
 
-	if(!ALLEGRO_IMAGE_ADDON_INIT)
+	if(!ALLEGRO_IMAGE_ADDON_INIT){
 		al_init_image_addon();
+		ALLEGRO_IMAGE_ADDON_INIT = true;
+	}
 
 	this->bitmap = al_load_bitmap(imgfile.c_str());
 	w = al_get_bitmap_width(this->bitmap);

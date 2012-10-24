@@ -23,6 +23,8 @@ using namespace std;
 #define DRAGON_TEXT string("Dragon")
 #define CAT_TEXT string("Cat")
 
+#define CAT_SOUND (SOUND_PATH + string("meaw.wav"))
+
 int main(int argc, char *argv[]){
 	twoDEngine *engine;
 	twoDObject *cat;
@@ -40,9 +42,9 @@ int main(int argc, char *argv[]){
 	textDragon->setColor(new twoDColor("white"));
 	textDragon->setText(DRAGON_TEXT);
 
-	cat = (twoDObject*)new twoDTest(new twoDSprite(CAT_SPRITE), textCat, 20, 20);
-	catRun = (twoDObject*)new twoDTest(new twoDSprite(CAT_RUNNING_SPRITE), textCat, 100, 100);
-	dragon = (twoDObject*)new twoDTest(new twoDSprite(DRAGON_SPRITE), textDragon, 300, 100);
+	cat = (twoDObject*)new twoDTest(new twoDSprite(CAT_SPRITE), textCat, 20, 20, "");
+	catRun = (twoDObject*)new twoDTest(new twoDSprite(CAT_RUNNING_SPRITE), textCat, 100, 100, CAT_SOUND);
+	dragon = (twoDObject*)new twoDTest(new twoDSprite(DRAGON_SPRITE), textDragon, 300, 100, "");
 
 	cat->setVisible(false);
 	engine->addObject(cat,5);

@@ -1,6 +1,6 @@
 #include "test.h"
 
-twoDTest::twoDTest(twoDSprite *sprite, twoDText *text, int x, int y){
+twoDTest::twoDTest(twoDSprite *sprite, twoDText *text, int x, int y, string soundfile){
 	this->sprite = sprite;
 	this->text = text;
 	this->text->setAlign(TWOD_TEXT_ALIGN_CENTER);
@@ -11,6 +11,10 @@ twoDTest::twoDTest(twoDSprite *sprite, twoDText *text, int x, int y){
 	this->visible = true;
 	this->collidable = true;
 	this->state = TWOD_STATE_STANDING;
+	if(soundfile != "")
+		this->sound = new twoDSound(soundfile);
+	else
+		this->sound = NULL;
 }
 
 void twoDTest::draw(){
@@ -31,6 +35,9 @@ void twoDTest::update(twoDEngine *engine){
 		this->x += -10;
 	if(engine->keyPressed(KEY_RIGHT))
 		this->x += 10;
+	if(engine->keyPressed(KEY_SPACE))
+		if(this->sound != NULL)
+			this->sound->play();
 
 	textX = this->x + (this->width / 2);
 	textY = this->y + ((this-> height - this->text->getSize()) / 2);
