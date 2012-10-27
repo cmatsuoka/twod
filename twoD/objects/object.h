@@ -1,5 +1,5 @@
-#ifndef TWODOBJECT_H
-#define TWODOBJECT_H
+#ifndef _TWODOBJECT_H_
+#define _TWODOBJECT_H_
 
 // solve cross-reference
 class twoDEngine;

@@ -1,5 +1,5 @@
-#ifndef TWODSPRITE_H
-#define TWODSPRITE_H
+#ifndef _TWODSPRITE_H_
+#define _TWODSPRITE_H_
 
 #include<string>
 #include<fstream>
@@ -22,6 +22,7 @@ public:
 	~twoDSprite();
 
 	void draw(); // draw sprite
+	void move(int mx, int my){ this->x += mx; this->y += my; }
 
 	// setters
 	void setSize(int,int);

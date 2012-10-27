@@ -1,8 +1,8 @@
 // Very simple 2D gaming engine using Allegro 5
 // Written by Thiago Garrett <thgarrett@gmail.com>
 //
-#ifndef TWODENGINE_H
-#define TWODENGINE_H
+#ifndef _TWODENGINE_H_
+#define _TWODENGINE_H_
 
 // solve cross-reference
 class twoDObject;

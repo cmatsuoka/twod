@@ -1,5 +1,5 @@
-#ifndef TWODTEXT_H
-#define TWODTEXT_H
+#ifndef _TWODTEXT_H_
+#define _TWODTEXT_H_
 
 #include<string>
 #include<allegro5/allegro.h>
@@ -27,6 +27,7 @@ public:
 	~twoDText();
 
 	void draw();
+	void move(int mx, int my){ this->x += mx; this->y += my; }
 
 	// setters
 	void setColor(twoDColor *c){ this->color = c; }

@@ -1,5 +1,5 @@
-#ifndef TWODIMAGE_H
-#define TWODIMAGE_H
+#ifndef _TWODIMAGE_H_
+#define _TWODIMAGE_H_
 
 #include<string>
 #include<allegro5/allegro.h>
@@ -20,6 +20,7 @@ public:
 
 	twoDImage * subImage(int,int,int,int); // get a smaller region of the image
 	void draw(); // draw image
+	void move(int mx, int my){ this->x += mx; this->y += my; }
 
 	// setters
 	void setSize(int, int);
@@ -31,6 +32,7 @@ public:
 	int getY(){ return this->y; }
 	int getWidth(){ return this->width; }
 	int getHeight(){ return this->height; }
+	ALLEGRO_BITMAP * getBitmap(){ return this->bitmap; }
 };
 
 #endif

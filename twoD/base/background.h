@@ -1,5 +1,5 @@
-#ifndef TWODBACKGROUND_H
-#define TWODBACKGROUND_H
+#ifndef _TWODBACKGROUND_H_
+#define _TWODBACKGROUND_H_
 
 #include<allegro5/allegro.h>
 #include "color.h"

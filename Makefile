@@ -1,6 +1,7 @@
 CC=g++
 OPTS=-O3 -Wall
-CFLAGS=`pkg-config --cflags --libs allegro-5.0 allegro_image-5.0 allegro_font-5.0 allegro_ttf-5.0 allegro_audio-5.0 allegro_acodec-5.0`
+CFLAGS=`pkg-config --cflags --libs allegro-5.0 allegro_image-5.0 allegro_font-5.0 \
+	allegro_ttf-5.0 allegro_audio-5.0 allegro_acodec-5.0 allegro_primitives-5.0`
 TARGET=example
 
 all: $(TARGET)
@@ -8,10 +9,16 @@ all: $(TARGET)
 exec: all 
 	./$(TARGET)
 
-$(TARGET): $(TARGET).cpp engine.o image.o color.o background.o test.o sprite.o text.o sound.o
+# example code
+$(TARGET): $(TARGET).cpp engine.o image.o color.o background.o test.o sprite.o \
+	text.o sound.o primitive.o
 	$(CC) $(OPTS) $(CFLAGS) -o $(TARGET) $(TARGET).cpp engine.o image.o \
-		color.o background.o test.o sprite.o text.o sound.o
+		color.o background.o test.o sprite.o text.o sound.o primitive.o
 
+test.o: test.h test.cpp
+	$(CC) $(OPTS) -c -o test.o test.cpp
+
+# twoD engine code'
 engine.o: twoD/engine.h twoD/engine.cpp
 	$(CC) $(OPTS) -c -o engine.o twoD/engine.cpp
 
@@ -33,8 +40,8 @@ text.o: twoD/base/text.h twoD/base/text.cpp
 sound.o: twoD/base/sound.h twoD/base/sound.cpp
 	$(CC) $(OPTS) -c -o sound.o twoD/base/sound.cpp
 
-test.o: twoD/objects/test.h twoD/objects/test.cpp twoD/objects/object.h
-	$(CC) $(OPTS) -c -o test.o twoD/objects/test.cpp
+primitive.o: twoD/base/primitive.h twoD/base/primitive.cpp
+	$(CC) $(OPTS) -c -o primitive.o twoD/base/primitive.cpp
 
 clean:
 	rm -f *.o

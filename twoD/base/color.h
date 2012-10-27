@@ -1,5 +1,5 @@
-#ifndef TWODCOLOR_H
-#define TWODCOLOR_H
+#ifndef _TWODCOLOR_H_
+#define _TWODCOLOR_H_
 
 #include<allegro5/allegro.h>
 #include<string>

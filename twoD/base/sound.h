@@ -1,5 +1,5 @@
-#ifndef TWODSOUND_H
-#define TWODSOUND_H
+#ifndef _TWODSOUND_H_
+#define _TWODSOUND_H_
 
 #include<string>
 #include<allegro5/allegro.h>

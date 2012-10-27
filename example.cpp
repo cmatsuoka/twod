@@ -2,9 +2,10 @@
 using namespace std;
 
 #include "twoD/engine.h"
-#include "twoD/objects/test.h"
 #include "twoD/base/sprite.h"
 #include "twoD/base/text.h"
+
+#include "test.h"
 
 #define DISPLAY_WIDTH 800
 #define DISPLAY_HEIGHT 600
@@ -43,7 +44,7 @@ int main(int argc, char *argv[]){
 	textDragon->setText(DRAGON_TEXT);
 
 	cat = (twoDObject*)new twoDTest(new twoDSprite(CAT_SPRITE), textCat, 20, 20, "");
-	catRun = (twoDObject*)new twoDTest(new twoDSprite(CAT_RUNNING_SPRITE), textCat, 100, 100, CAT_SOUND);
+	catRun = (twoDObject*)new twoDTest(new twoDSprite(CAT_RUNNING_SPRITE), textCat, 162, 100, CAT_SOUND);
 	dragon = (twoDObject*)new twoDTest(new twoDSprite(DRAGON_SPRITE), textDragon, 300, 100, "");
 
 	cat->setVisible(false);
