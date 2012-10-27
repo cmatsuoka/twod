@@ -42,10 +42,20 @@ protected:
 	bool collidable;
 //	twoDMovement *movement;
 
+	virtual void updatePosition(int, int) = 0;
+
 public:
 	virtual void draw() = 0;
 	virtual void update(twoDEngine*) = 0;
 	virtual void collision(twoDObject*) = 0;
+
+	void move(int mx, int my){ 
+		int oldX = this->x;
+		int oldY = this->y;
+		this->x += mx; 
+		this->y += my; 
+		this->updatePosition(oldX,oldY); 
+	}
 
 	// getters
 	int getX(){ return this->x; }
@@ -58,12 +68,18 @@ public:
 	bool isCollidable(){ return this->collidable; }
 
 	// setters
-	void setPosition(int x, int y){ this->x = x; this->y = y; }
 	void setSize(int w, int h){ this->width = w; this->height = h; }
 	void setLayer(int l){ this->layer = l; }
 	void setState(int s){ this->state = s; }
 	void setVisible(bool v){ this->visible = v; }
 	void setCollidable(bool c){ this->collidable = c; }
+	void setPosition(int x, int y){ 
+		int oldX = this->x;
+		int oldY = this->y;
+		this->x = x; 
+		this->y = y; 
+		this->updatePosition(oldX, oldY); 
+	}
 };
 
 #endif

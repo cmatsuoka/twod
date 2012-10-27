@@ -1,9 +1,9 @@
 #include<string>
 using namespace std;
 
-#include "twoD/engine.h"
-#include "twoD/base/sprite.h"
-#include "twoD/base/text.h"
+#include "../../twoD/engine.h"
+#include "../../twoD/base/sprite.h"
+#include "../../twoD/base/text.h"
 
 #include "test.h"
 

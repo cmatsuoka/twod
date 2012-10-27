@@ -25,6 +25,7 @@ I'm developing this on my free time, so things are going slowly :(
 - parallax scrolling
 
 *Future optimizations:*
+- enhanced movement (using angles instead of cardinal points)
 - multi-thread operations (for better performance)
 - error handling
 - enhanced collision detection

@@ -61,7 +61,7 @@ public:
 	bool keyPressed(int);
 	bool addObject(twoDObject *);
 	bool addObject(twoDObject *, int);
-// TODO	twoDObject* removeObject(twoDObject *);
+//	twoDObject* removeObject(twoDObject *); TODO
 
 	// setters
 	void setBackground(twoDBackground *b){ this->background = b; }

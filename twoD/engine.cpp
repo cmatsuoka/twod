@@ -60,6 +60,9 @@ bool twoDEngine::addObject(twoDObject *obj){
 	return false;
 }
 
+void twoDEngine::checkCollision(twoDObject *obj){
+}
+
 void twoDEngine::main(){
 	ALLEGRO_DISPLAY *display;
 	ALLEGRO_TIMER *timer;

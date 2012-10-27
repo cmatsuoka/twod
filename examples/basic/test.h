@@ -1,11 +1,11 @@
 #ifndef _TWODTEST_H_
 #define _TWODTEST_H_
 
-#include "twoD/objects/object.h"
-#include "twoD/base/sprite.h"
-#include "twoD/base/text.h"
-#include "twoD/base/sound.h"
-#include "twoD/base/primitive.h"
+#include "../../twoD/objects/object.h"
+#include "../../twoD/base/sprite.h"
+#include "../../twoD/base/text.h"
+#include "../../twoD/base/sound.h"
+#include "../../twoD/base/primitive.h"
 
 class twoDTest: public twoDObject {
 	twoDSprite *sprite;
