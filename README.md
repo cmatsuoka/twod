@@ -1,10 +1,10 @@
-twod
+twoD
 ====
 
-twoD is a very simple 2D gaming engine created for didactic purposes, using
+twoD is a very simple 2D gaming engine created for didactic purposes using
 Allegro 5.
 
-I'm developing this om my free time, so things are going slowly :(
+I'm developing this on my free time, so things are going slowly :(
 
 *Completed:*
 - basic structure
