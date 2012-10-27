@@ -2,7 +2,7 @@ twoD
 ====
 
 twoD is a very simple 2D gaming engine created for didactic purposes using
-Allegro 5.
+Allegro 5 and licensed under the LGPL 3 <http://www.gnu.org/licenses/lgpl-3.0.txt>.
 
 I'm developing this on my free time, so things are going slowly :(
 
