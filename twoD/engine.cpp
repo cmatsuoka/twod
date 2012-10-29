@@ -67,9 +67,14 @@ void twoDEngine::checkLayerCollision(twoDObject *obj[], int num){
 	bool xCollision, yCollision;
 
 	for(i=0; i<num; i++){
+		if(! obj[i]->isCollidable())
+			continue;
 		xCollision = false;
 		yCollision = false;
 		for(j=i+1; j<num; j++){
+			if(! obj[j]->isCollidable())
+				continue;
+
 			// check collision between objects 'i' and 'j'
 			obj1X = obj[i]->getX();
 			obj1Y = obj[i]->getY();
@@ -128,7 +133,7 @@ void twoDEngine::main(){
 			// draw all objects in layer order
 			for(int i=0; i<TWOD_LAYERS; i++)
 				for(int j=0; j<TWOD_OBJ_PER_LAYER; j++)
-					if(this->layer[i][j] != NULL)
+					if((this->layer[i][j] != NULL) && (this->layer[i][j]->isVisible()))
 						this->layer[i][j]->draw();
 					else
 						break;

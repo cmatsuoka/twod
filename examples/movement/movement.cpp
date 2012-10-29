@@ -30,7 +30,7 @@ int main(int argc, char *argv[]){
 	square2->getMovement()->setDirection(TWOD_MOVE_DIRECTION_W);
 
 	engine->addObject((twoDObject*)square1,5);
-	engine->addObject((twoDObject*)square2,4);
+	engine->addObject((twoDObject*)square2,5);
 	engine->main();
 
 	return 0;
