@@ -53,11 +53,13 @@ private:
 	twoDBackground *background;
 	twoDObject *layer[TWOD_LAYERS][TWOD_OBJ_PER_LAYER];
 
+	void checkLayerCollision(twoDObject**,int); 
+
 public:
 	twoDEngine(int width, int height);
 	~twoDEngine();
 	void main();
-	void checkCollision(twoDObject*); 
+	void finish();
 	bool keyPressed(int);
 	bool addObject(twoDObject *);
 	bool addObject(twoDObject *, int);

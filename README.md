@@ -16,21 +16,22 @@ I'm developing this on my free time, so things are going slowly :(
 - draw objects according to layers
 - primitives support
 - texturized primitives
+- movement support (speed, direction)
+- collision detection (simple version)
 
 *To be done:*
-- movement support (with speed, direction, physics)
-- collision detection (simple version)
-- menu generators
+- Physics (simple version)
 - tiles support (for map/background building)
 - parallax scrolling
+- menu generators
 
 *Future optimizations:*
 - enhanced movement (using angles instead of cardinal points)
 - multi-thread operations (for better performance)
 - error handling
-- enhanced collision detection
 - enhanced physics
 - make sure no memory is leaking
+- enhanced collision detection
 
 Yeah, there's still a long way to go :D
 

@@ -60,7 +60,44 @@ bool twoDEngine::addObject(twoDObject *obj){
 	return false;
 }
 
-void twoDEngine::checkCollision(twoDObject *obj){
+void twoDEngine::checkLayerCollision(twoDObject *obj[], int num){
+	int i,j;
+	int obj1X, obj1Y, obj1W, obj1H;
+	int obj2X, obj2Y, obj2W, obj2H;
+	bool xCollision, yCollision;
+
+	for(i=0; i<num; i++){
+		xCollision = false;
+		yCollision = false;
+		for(j=i+1; j<num; j++){
+			// check collision between objects 'i' and 'j'
+			obj1X = obj[i]->getX();
+			obj1Y = obj[i]->getY();
+			obj1W = obj[i]->getWidth();
+			obj1H = obj[i]->getHeight();
+			obj2X = obj[j]->getX();
+			obj2Y = obj[j]->getY();
+			obj2W = obj[j]->getWidth();
+			obj2H = obj[j]->getHeight();
+
+			// X axis
+			if((obj2X >= obj1X) && (obj2X <= (obj1X+obj1W-1)))
+				xCollision = true;
+			else if((obj1X >= obj2X) && (obj1X <= (obj2X+obj2W-1)))
+				xCollision = true;
+			
+			// Y axis
+			if((obj2Y >= obj1Y) && (obj2Y <= (obj1Y+obj1H-1)))
+				yCollision = true;
+			else if((obj1Y >= obj2Y) && (obj1Y <= (obj2Y+obj2H-1)))
+				yCollision = true;
+
+			if(xCollision && yCollision){
+				obj[i]->collision(obj[j]);
+				obj[j]->collision(obj[i]);
+			}
+		}
+	}
 }
 
 void twoDEngine::main(){
@@ -105,16 +142,22 @@ void twoDEngine::main(){
 
 		if(event.type == ALLEGRO_EVENT_TIMER){
 			// update all objects in layer order
-			for(int i=0; i<TWOD_LAYERS; i++)
-				for(int j=0; j<TWOD_OBJ_PER_LAYER; j++)
+			int i,j;
+			for(i=0; i<TWOD_LAYERS; i++){
+				for(j=0; j<TWOD_OBJ_PER_LAYER; j++){
 					if(this->layer[i][j] != NULL)
 						this->layer[i][j]->update(this);
 					else
 						break;
+				}
+				this->checkLayerCollision(layer[i],j);
+			}
 			draw = true;
 		}
-		else if(event.type == ALLEGRO_EVENT_DISPLAY_CLOSE)
+		else if(event.type == ALLEGRO_EVENT_DISPLAY_CLOSE){
+			this->end = true;
 			break;
+		}
 		// key pressed
 		else if (event.type == ALLEGRO_EVENT_KEY_DOWN){
 			switch(event.keyboard.keycode){
@@ -139,12 +182,21 @@ void twoDEngine::main(){
 				CASE_KEY(ENTER, false);
 			}
 		}
+
+		// quit when ESC is pressed
+		if(this->key[KEY_ESCAPE]){
+			this->end = true;
+			break;
+		}
 	}
 
 	// finish
-	this->end = true;
 	al_destroy_event_queue(event_queue);
 	al_destroy_timer(timer);
 	al_destroy_display(display);
+}
+
+void twoDEngine::finish(){
+	this->end = true;
 }
 

@@ -22,9 +22,10 @@
 
 // solve cross-reference
 class twoDEngine;
+class twoDMovement;
 
 #include "../engine.h"
-//#include "../base/movement.h"
+#include "../base/movement.h"
 
 // objects states
 #define TWOD_STATE_STANDING 1
@@ -40,7 +41,7 @@ protected:
 	int state;
 	bool visible;
 	bool collidable;
-//	twoDMovement *movement;
+	twoDMovement *movement;
 
 	virtual void updatePosition(int, int) = 0;
 
@@ -64,6 +65,7 @@ public:
 	int getHeight(){ return this->height; }
 	int getLayer(){ return this-> layer; }
 	int getState(){ return this->state; }
+	twoDMovement * getMovement(){ return this->movement; }
 	bool isVisible(){ return this->visible; }
 	bool isCollidable(){ return this->collidable; }
 

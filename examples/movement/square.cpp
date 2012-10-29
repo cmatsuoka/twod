@@ -18,13 +18,12 @@ twoDSquare::twoDSquare(int size, twoDColor *color){
 	this->width = size;
 	this->height = size;
 
-	this->movement = new twoDMovement(TWOD_MODE_DIRECTION_E, 0, 0);
+	this->movement = new twoDMovement(TWOD_MOVE_DIRECTION_E, 0, 0);
 }
 
 void twoDSquare::update(twoDEngine *engine){
 	this->movement->update();
 	this->movement->apply((twoDObject*)this);
-	engine->checkCollision((twoDObject*)this);
 
 	if(engine->keyPressed(KEY_UP))
 		this->movement->speedUp(SPEED_STEP);
@@ -54,5 +53,9 @@ void twoDSquare::draw(){
 }
 
 void twoDSquare::collision(twoDObject *obj){
+	this->movement->turnRight();
+	this->movement->turnRight();
+	this->movement->turnRight();
+	this->movement->turnRight();
 }
 

@@ -20,17 +20,20 @@
 #ifndef _TWODMOVEMENT_H_
 #define _TWODMOVEMENT_H_
 
+// solve cross-reference
+class twoDObject;
+
 #include "../objects/object.h"
 
 enum TWOD_DIRECTIONS {
-	TWOD_MODE_DIRECTION_N, // north
-	TWOD_MODE_DIRECTION_E, // east
-	TWOD_MODE_DIRECTION_W, // west
-	TWOD_MODE_DIRECTION_S, // south
-	TWOD_MODE_DIRECTION_NE, // northeast
-	TWOD_MODE_DIRECTION_NW, // northwest
-	TWOD_MODE_DIRECTION_SE, // southeast
-	TWOD_MODE_DIRECTION_SW // southwest
+	TWOD_MOVE_DIRECTION_N, // north
+	TWOD_MOVE_DIRECTION_E, // east
+	TWOD_MOVE_DIRECTION_W, // west
+	TWOD_MOVE_DIRECTION_S, // south
+	TWOD_MOVE_DIRECTION_NE, // northeast
+	TWOD_MOVE_DIRECTION_NW, // northwest
+	TWOD_MOVE_DIRECTION_SE, // southeast
+	TWOD_MOVE_DIRECTION_SW // southwest
 };
 
 class twoDMovement {
@@ -47,6 +50,8 @@ public:
 	void apply(twoDObject*);
 	void speedUp(int s){ this->speed += s; }
 	void speedDown(int s){ this->speed -= s; }
+	void accelUp(int a){ this->acceleration += a; }
+	void accelDown(int a){ this->acceleration -= a; }
 	void turnRight();
 	void turnLeft();
 	void stop();

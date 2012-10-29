@@ -10,7 +10,6 @@
 
 class twoDSquare: public twoDObject {
 	twoDPrimitive *primitive;
-	twoDMovement *movement;
 
 public:
 	twoDSquare(int, twoDColor*);

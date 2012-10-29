@@ -31,6 +31,9 @@ twoDTest::twoDTest(twoDSprite *sprite, twoDText *text, int x, int y, string soun
 	this->primitive->setType(TWOD_PRIMITIVE_TRIANGLE_FAN);
 }
 
+void twoDTest::updatePosition(int oldX, int oldY){
+}
+
 void twoDTest::draw(){
 	if(this->visible){
 		this->primitive->draw();

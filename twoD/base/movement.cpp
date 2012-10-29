@@ -31,6 +31,9 @@ twoDMovement::~twoDMovement(){
 void twoDMovement::update(){
 	this->speed += this->acceleration;
 
+	if(this->speed < 0)
+		this->speed = 0;
+
 	// TODO physics here ??
 }
 
@@ -41,31 +44,31 @@ void twoDMovement::apply(twoDObject *obj){
 	moveY = 0;
 
 	switch(this->direction){
-		case TWOD_MODE_DIRECTION_N:
+		case TWOD_MOVE_DIRECTION_N:
 			moveY -= this->speed;
 			break;
-		case TWOD_MODE_DIRECTION_S:
+		case TWOD_MOVE_DIRECTION_S:
 			moveY += this->speed;
 			break;
-		case TWOD_MODE_DIRECTION_E:
+		case TWOD_MOVE_DIRECTION_E:
 			moveX += this->speed;
 			break;
-		case TWOD_MODE_DIRECTION_W:
+		case TWOD_MOVE_DIRECTION_W:
 			moveX -= this->speed;
 			break;
-		case TWOD_MODE_DIRECTION_NE:
+		case TWOD_MOVE_DIRECTION_NE:
 			moveX += this->speed;
 			moveY -= this->speed;
 			break;
-		case TWOD_MODE_DIRECTION_NW:
+		case TWOD_MOVE_DIRECTION_NW:
 			moveX -= this->speed;
 			moveY -= this->speed;
 			break;
-		case TWOD_MODE_DIRECTION_SE:
+		case TWOD_MOVE_DIRECTION_SE:
 			moveX += this->speed;
 			moveY += this->speed;
 			break;
-		case TWOD_MODE_DIRECTION_SW:
+		case TWOD_MOVE_DIRECTION_SW:
 			moveX -= this->speed;
 			moveY += this->speed;
 			break;
@@ -81,58 +84,58 @@ void twoDMovement::stop(){
 
 void twoDMovement::turnRight(){
 	switch(this->direction){
-		case TWOD_MODE_DIRECTION_N:
-			this->direction = TWOD_MODE_DIRECTION_NE;
+		case TWOD_MOVE_DIRECTION_N:
+			this->direction = TWOD_MOVE_DIRECTION_NE;
 			break;
-		case TWOD_MODE_DIRECTION_S:
-			this->direction = TWOD_MODE_DIRECTION_SW;
+		case TWOD_MOVE_DIRECTION_S:
+			this->direction = TWOD_MOVE_DIRECTION_SW;
 			break;
-		case TWOD_MODE_DIRECTION_E:
-			this->direction = TWOD_MODE_DIRECTION_SE;
+		case TWOD_MOVE_DIRECTION_E:
+			this->direction = TWOD_MOVE_DIRECTION_SE;
 			break;
-		case TWOD_MODE_DIRECTION_W:
-			this->direction = TWOD_MODE_DIRECTION_NW;
+		case TWOD_MOVE_DIRECTION_W:
+			this->direction = TWOD_MOVE_DIRECTION_NW;
 			break;
-		case TWOD_MODE_DIRECTION_NE:
-			this->direction = TWOD_MODE_DIRECTION_E;
+		case TWOD_MOVE_DIRECTION_NE:
+			this->direction = TWOD_MOVE_DIRECTION_E;
 			break;
-		case TWOD_MODE_DIRECTION_NW:
-			this->direction = TWOD_MODE_DIRECTION_N;
+		case TWOD_MOVE_DIRECTION_NW:
+			this->direction = TWOD_MOVE_DIRECTION_N;
 			break;
-		case TWOD_MODE_DIRECTION_SE:
-			this->direction = TWOD_MODE_DIRECTION_S;
+		case TWOD_MOVE_DIRECTION_SE:
+			this->direction = TWOD_MOVE_DIRECTION_S;
 			break;
-		case TWOD_MODE_DIRECTION_SW:
-			this->direction = TWOD_MODE_DIRECTION_W;
+		case TWOD_MOVE_DIRECTION_SW:
+			this->direction = TWOD_MOVE_DIRECTION_W;
 			break;
 	}
 }
 
 void twoDMovement::turnLeft(){
 	switch(this->direction){
-		case TWOD_MODE_DIRECTION_N:
-			this->direction = TWOD_MODE_DIRECTION_NW;
+		case TWOD_MOVE_DIRECTION_N:
+			this->direction = TWOD_MOVE_DIRECTION_NW;
 			break;
-		case TWOD_MODE_DIRECTION_S:
-			this->direction = TWOD_MODE_DIRECTION_SE;
+		case TWOD_MOVE_DIRECTION_S:
+			this->direction = TWOD_MOVE_DIRECTION_SE;
 			break;
-		case TWOD_MODE_DIRECTION_E:
-			this->direction = TWOD_MODE_DIRECTION_NE;
+		case TWOD_MOVE_DIRECTION_E:
+			this->direction = TWOD_MOVE_DIRECTION_NE;
 			break;
-		case TWOD_MODE_DIRECTION_W:
-			this->direction = TWOD_MODE_DIRECTION_SW;
+		case TWOD_MOVE_DIRECTION_W:
+			this->direction = TWOD_MOVE_DIRECTION_SW;
 			break;
-		case TWOD_MODE_DIRECTION_NE:
-			this->direction = TWOD_MODE_DIRECTION_N;
+		case TWOD_MOVE_DIRECTION_NE:
+			this->direction = TWOD_MOVE_DIRECTION_N;
 			break;
-		case TWOD_MODE_DIRECTION_NW:
-			this->direction = TWOD_MODE_DIRECTION_W;
+		case TWOD_MOVE_DIRECTION_NW:
+			this->direction = TWOD_MOVE_DIRECTION_W;
 			break;
-		case TWOD_MODE_DIRECTION_SE:
-			this->direction = TWOD_MODE_DIRECTION_E;
+		case TWOD_MOVE_DIRECTION_SE:
+			this->direction = TWOD_MOVE_DIRECTION_E;
 			break;
-		case TWOD_MODE_DIRECTION_SW:
-			this->direction = TWOD_MODE_DIRECTION_S;
+		case TWOD_MOVE_DIRECTION_SW:
+			this->direction = TWOD_MOVE_DIRECTION_S;
 			break;
 	}
 }
