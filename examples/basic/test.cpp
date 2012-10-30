@@ -72,6 +72,6 @@ void twoDTest::update(twoDEngine *engine){
 	this->text->setPosition(textX, textY);
 }
 
-void twoDTest::collision(twoDObject *obj){
+void twoDTest::collision(twoDObject *obj, int position){
 }
 

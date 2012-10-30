@@ -15,7 +15,7 @@ public:
 	twoDSquare(int, twoDColor*);
 	void draw();
 	void update(twoDEngine*);
-	void collision(twoDObject*);
+	void collision(twoDObject*,int);
 	void updatePosition(int, int);
 };
 

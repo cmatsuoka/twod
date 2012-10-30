@@ -17,7 +17,7 @@ public:
 	twoDTest(twoDSprite*, twoDText*, int, int, string);
 	void draw();
 	void update(twoDEngine*);
-	void collision(twoDObject*);
+	void collision(twoDObject*,int);
 	void updatePosition(int, int);
 };
 

@@ -61,7 +61,7 @@ bool twoDEngine::addObject(twoDObject *obj){
 }
 
 void twoDEngine::checkLayerCollision(twoDObject *obj[], int num){
-	int i,j;
+	int i, j, pos;
 	int obj1X, obj1Y, obj1W, obj1H;
 	int obj2X, obj2Y, obj2W, obj2H;
 	bool xCollision, yCollision;
@@ -69,11 +69,12 @@ void twoDEngine::checkLayerCollision(twoDObject *obj[], int num){
 	for(i=0; i<num; i++){
 		if(! obj[i]->isCollidable())
 			continue;
-		xCollision = false;
-		yCollision = false;
 		for(j=i+1; j<num; j++){
 			if(! obj[j]->isCollidable())
 				continue;
+	
+			xCollision = false;
+			yCollision = false;
 
 			// check collision between objects 'i' and 'j'
 			obj1X = obj[i]->getX();
@@ -98,12 +99,69 @@ void twoDEngine::checkLayerCollision(twoDObject *obj[], int num){
 				yCollision = true;
 
 			if(xCollision && yCollision){
-				obj[i]->collision(obj[j]);
-				obj[j]->collision(obj[i]);
+				pos = this->getCollisionPosition(obj[i],obj[j]);
+				obj[i]->collision(obj[j], pos);
+				pos = this->getCollisionPosition(obj[j],obj[i]);
+				obj[j]->collision(obj[i], pos);
 			}
 		}
 	}
 }
+
+int twoDEngine::getCollisionPosition(twoDObject *obj1, twoDObject *obj2){
+	int position = 0;
+
+	int obj1X1, obj1X2, obj1X3, obj1X4;
+	int obj1Y1, obj1Y2, obj1Y3, obj1Y4;
+	int obj2X1, obj2X2, obj2X3, obj2X4;
+	int	obj2Y1, obj2Y2, obj2Y3, obj2Y4;
+
+	obj1X1 = obj1X3 = obj1->getX();
+	obj1Y1 = obj1Y2 = obj1->getY();
+	obj1X2 = obj1X4 = obj1->getX() + obj1->getWidth() - 1;
+	obj1Y3 = obj1Y4 = obj1->getY() + obj1->getHeight() - 1;
+	
+	obj2X1 = obj2X3 = obj2->getX();
+	obj2Y1 = obj2Y2 = obj2->getY();
+	obj2X2 = obj2X4 = obj2->getX() + obj2->getWidth() - 1;
+	obj2Y3 = obj2Y4 = obj2->getY() + obj2->getHeight() - 1;
+
+	// position top left
+	if((obj1X1 < obj2X1) && (obj1Y1 < obj2Y1)){
+		position = TWOD_POSITION_TOPLEFT;
+	}
+	// position top
+	else if((obj1Y1 < obj2Y1) && (obj1X1 >= obj2X1) && (obj1X2 <= obj2X2)){
+		position = TWOD_POSITION_TOP;
+	}
+	// position top right
+	else if((obj1X2 > obj2X2) && (obj1Y1 < obj2Y1)){
+		position = TWOD_POSITION_TOPRIGHT;
+	}
+	// position left
+	else if((obj1X1 < obj2X1) && (obj1Y1 >= obj2Y1) && (obj1Y3 <= obj2Y3)){
+		position = TWOD_POSITION_LEFT;
+	}
+	// position right
+	else if((obj1X2 > obj2X2) && (obj1Y1 >= obj2Y1) && (obj1Y3 <= obj2Y4)){
+		position = TWOD_POSITION_RIGHT;
+	}
+	// position bot left
+	else if((obj1X1 < obj2X1) && (obj1Y3 > obj2Y3)){
+		position = TWOD_POSITION_BOTLEFT;
+	}
+	// position bot 
+	else if((obj1Y3 > obj2Y3) && (obj1X3 >= obj2X3) && (obj1X4 <= obj2X4)){
+		position = TWOD_POSITION_BOT;
+	}
+	// position bot right
+	else if((obj1X4 > obj2X4) && (obj1Y4 < obj2Y4)){
+		position = TWOD_POSITION_BOTRIGHT;
+	}
+
+	return position;
+}
+
 
 void twoDEngine::main(){
 	ALLEGRO_DISPLAY *display;
@@ -172,7 +230,42 @@ void twoDEngine::main(){
 				CASE_KEY(RIGHT, true);
 				CASE_KEY(SPACE, true);
 				CASE_KEY(ESCAPE, true);
-				CASE_KEY(ENTER, true);
+				CASE_KEY(A, true);
+				CASE_KEY(B, true);
+				CASE_KEY(C, true);
+				CASE_KEY(D, true);
+				CASE_KEY(E, true);
+				CASE_KEY(F, true);
+				CASE_KEY(G, true);
+				CASE_KEY(H, true);
+				CASE_KEY(I, true);
+				CASE_KEY(J, true);
+				CASE_KEY(K, true);
+				CASE_KEY(L, true);
+				CASE_KEY(M, true);
+				CASE_KEY(N, true);
+				CASE_KEY(O, true);
+				CASE_KEY(P, true);
+				CASE_KEY(Q, true);
+				CASE_KEY(R, true);
+				CASE_KEY(S, true);
+				CASE_KEY(T, true);
+				CASE_KEY(U, true);
+				CASE_KEY(V, true);
+				CASE_KEY(X, true);
+				CASE_KEY(W, true);
+				CASE_KEY(Y, true);
+				CASE_KEY(Z, true);
+				CASE_KEY(0, true);
+				CASE_KEY(1, true);
+				CASE_KEY(2, true);
+				CASE_KEY(3, true);
+				CASE_KEY(4, true);
+				CASE_KEY(5, true);
+				CASE_KEY(6, true);
+				CASE_KEY(7, true);
+				CASE_KEY(8, true);
+				CASE_KEY(9, true);
 			}
 		}
 		// key released
@@ -185,13 +278,43 @@ void twoDEngine::main(){
 				CASE_KEY(SPACE, false);
 				CASE_KEY(ESCAPE, false);
 				CASE_KEY(ENTER, false);
+				CASE_KEY(A, false);
+				CASE_KEY(B, false);
+				CASE_KEY(C, false);
+				CASE_KEY(D, false);
+				CASE_KEY(E, false);
+				CASE_KEY(F, false);
+				CASE_KEY(G, false);
+				CASE_KEY(H, false);
+				CASE_KEY(I, false);
+				CASE_KEY(J, false);
+				CASE_KEY(K, false);
+				CASE_KEY(L, false);
+				CASE_KEY(M, false);
+				CASE_KEY(N, false);
+				CASE_KEY(O, false);
+				CASE_KEY(P, false);
+				CASE_KEY(Q, false);
+				CASE_KEY(R, false);
+				CASE_KEY(S, false);
+				CASE_KEY(T, false);
+				CASE_KEY(U, false);
+				CASE_KEY(V, false);
+				CASE_KEY(X, false);
+				CASE_KEY(W, false);
+				CASE_KEY(Y, false);
+				CASE_KEY(Z, false);
+				CASE_KEY(0, false);
+				CASE_KEY(1, false);
+				CASE_KEY(2, false);
+				CASE_KEY(3, false);
+				CASE_KEY(4, false);
+				CASE_KEY(5, false);
+				CASE_KEY(6, false);
+				CASE_KEY(7, false);
+				CASE_KEY(8, false);
+				CASE_KEY(9, false);
 			}
-		}
-
-		// quit when ESC is pressed
-		if(this->key[KEY_ESCAPE]){
-			this->end = true;
-			break;
 		}
 	}
 

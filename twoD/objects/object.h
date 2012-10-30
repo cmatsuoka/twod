@@ -48,7 +48,7 @@ protected:
 public:
 	virtual void draw() = 0;
 	virtual void update(twoDEngine*) = 0;
-	virtual void collision(twoDObject*) = 0;
+	virtual void collision(twoDObject*,int) = 0;
 
 	void move(int mx, int my){ 
 		int oldX = this->x;

@@ -37,11 +37,25 @@ using namespace std;
 
 enum TWOD_KEYS {
 	KEY_UP, KEY_DOWN, KEY_LEFT, KEY_RIGHT, KEY_SPACE, KEY_ESCAPE, KEY_ENTER,
+	KEY_A, KEY_B, KEY_C, KEY_D, KEY_E, KEY_F, KEY_G, KEY_H, KEY_I, KEY_J, KEY_K,
+	KEY_L, KEY_M, KEY_N, KEY_O, KEY_P, KEY_Q, KEY_R, KEY_S, KEY_T, KEY_U, KEY_V, 
+	KEY_X, KEY_W, KEY_Y, KEY_Z, KEY_0, KEY_1, KEY_2, KEY_3, KEY_4, KEY_5, KEY_6,
+	KEY_7, KEY_8, KEY_9,
 	TWOD_KEYS_COUNT
 };
 
 // macro for keyboard keys handling 
 #define CASE_KEY(NAME, VALUE) case ALLEGRO_KEY_##NAME: this->key[KEY_##NAME] = (VALUE); break
+
+// collision positions
+#define TWOD_POSITION_TOPLEFT 0
+#define TWOD_POSITION_TOP 1
+#define TWOD_POSITION_TOPRIGHT 2
+#define TWOD_POSITION_LEFT 3
+#define TWOD_POSITION_RIGHT 4
+#define TWOD_POSITION_BOTLEFT 5
+#define TWOD_POSITION_BOT 6
+#define TWOD_POSITION_BOTRIGHT 7
 
 class twoDEngine {
 private:
@@ -53,7 +67,9 @@ private:
 	twoDBackground *background;
 	twoDObject *layer[TWOD_LAYERS][TWOD_OBJ_PER_LAYER];
 
+	// collision
 	void checkLayerCollision(twoDObject**,int); 
+	int getCollisionPosition(twoDObject*, twoDObject*);
 
 public:
 	twoDEngine(int width, int height);

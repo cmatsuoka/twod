@@ -12,13 +12,16 @@ exec: all
 
 # example code
 $(TARGET): $(TARGET).cpp engine.o image.o color.o background.o square.o sprite.o \
-	text.o sound.o primitive.o movement.o
+	text.o sound.o primitive.o movement.o wall.o
 	$(CC) $(OPTS) $(CFLAGS) -o $(TARGET) $(TARGET).cpp engine.o image.o \
 		color.o background.o square.o sprite.o text.o sound.o primitive.o \
-		movement.o
+		movement.o wall.o
 
 square.o: square.h square.cpp
 	$(CC) $(OPTS) -c -o square.o square.cpp
+
+wall.o: wall.h wall.cpp
+	$(CC) $(OPTS) -c -o wall.o wall.cpp
 
 # twoD engine code
 engine.o: $(TWODPATH)/engine.h $(TWODPATH)/engine.cpp

@@ -22,23 +22,59 @@ twoDSquare::twoDSquare(int size, twoDColor *color){
 }
 
 void twoDSquare::update(twoDEngine *engine){
-	this->movement->update();
-	this->movement->apply((twoDObject*)this);
+	bool up, down, left, right;
+	int dir;
+
+	up = down = left = right = false;
+	dir = -1;
 
 	if(engine->keyPressed(KEY_UP))
-		this->movement->speedUp(SPEED_STEP);
+		up = true;
 	if(engine->keyPressed(KEY_DOWN))
-		this->movement->speedDown(SPEED_STEP);
+		down = true;
 	if(engine->keyPressed(KEY_LEFT))
-		this->movement->turnLeft();
+		left = true;
 	if(engine->keyPressed(KEY_RIGHT))
-		this->movement->turnRight();
+		right = true;
 	if(engine->keyPressed(KEY_SPACE))
 		this->movement->stop();
+	if(engine->keyPressed(KEY_A))
+		this->movement->speedUp(SPEED_STEP);
+	if(engine->keyPressed(KEY_S))
+		this->movement->speedDown(SPEED_STEP);
+
+	if(up)
+		if(left)
+			dir = TWOD_MOVE_DIRECTION_NW;
+		else if(right)
+			dir = TWOD_MOVE_DIRECTION_NE;
+		else
+			dir = TWOD_MOVE_DIRECTION_N;
+	else if(down)
+		if(left)
+			dir = TWOD_MOVE_DIRECTION_SW;
+		else if(right)
+			dir = TWOD_MOVE_DIRECTION_SE;
+		else
+			dir = TWOD_MOVE_DIRECTION_S;
+	else if(left)
+		dir = TWOD_MOVE_DIRECTION_W;
+	else if(right)
+		dir = TWOD_MOVE_DIRECTION_E;
+
+	this->movement->update();
+	if(dir > -1){
+		this->movement->setDirection(dir);
+		this->movement->apply((twoDObject*)this);
+	}
 }
 
 void twoDSquare::updatePosition(int oldX, int oldY){
 	int moveX, moveY;
+	
+	if(this->state == TWOD_STATE_COLLIDING){
+		this->state = TWOD_STATE_MOVING;
+	}
 
 	// update position if moved
 	if((this->x != oldX) || (this->y != oldY)){
@@ -52,10 +88,50 @@ void twoDSquare::draw(){
 	this->primitive->draw();
 }
 
-void twoDSquare::collision(twoDObject *obj){
-	this->movement->turnRight();
-	this->movement->turnRight();
-	this->movement->turnRight();
-	this->movement->turnRight();
+void twoDSquare::collision(twoDObject *obj, int position){
+	int moveX, moveY;
+//	int myDir;
+	bool onTop, onLeft, onRight, onBottom;
+
+//	myDir = this->movement->getDirection();
+	onTop = onLeft = onRight = onBottom = false;
+	this->state = TWOD_STATE_COLLIDING;
+	moveX = 0;
+	moveY = 0;
+
+	switch(position){
+		case TWOD_POSITION_TOPLEFT:
+			break;
+		case TWOD_POSITION_TOP:
+			onBottom = true;
+			break;
+		case TWOD_POSITION_TOPRIGHT:
+			break;
+		case TWOD_POSITION_LEFT:
+			onRight = true;
+			break;
+		case TWOD_POSITION_RIGHT:
+			onLeft = true;
+			break;
+		case TWOD_POSITION_BOTLEFT:
+			break;
+		case TWOD_POSITION_BOT:
+			onTop = true;
+			break;
+		case TWOD_POSITION_BOTRIGHT:
+			break;
+	}
+
+	if(onRight)
+		moveX = obj->getX() - (this->x + this->width);
+	else if(onLeft)
+		moveX = (obj->getX() + obj->getWidth()) - this->x;
+
+	if(onTop)
+		moveY = (obj->getY() + obj->getHeight()) - this->y;
+	else if(onBottom)
+		moveY = obj->getY() - (this->y + this->height);
+
+	this->move(moveX,moveY);
 }
 
