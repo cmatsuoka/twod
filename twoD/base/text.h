@@ -35,8 +35,10 @@ using namespace std;
 class twoDText {
 private:
 	ALLEGRO_FONT *font;
+	ALLEGRO_BITMAP *buffer;
 	twoDColor *color;
 	int x, y;
+	int width, height;
 	int size;
 	int align;
 	string text;
@@ -49,9 +51,9 @@ public:
 	void move(int mx, int my){ this->x += mx; this->y += my; }
 
 	// setters
-	void setColor(twoDColor *c){ this->color = c; }
-	void setText(string t){ this->text = t; }
-	void setAlign(int a){ this->align = a; }
+	void setColor(twoDColor *c){ this->color = c; this->setText(this->text); }
+	void setText(string);
+	void setAlign(int a){ this->align = a; this->setText(this->text); }
 	void setPosition(int x, int y){ this->x = x; this->y = y; }
 
 	// getters
@@ -61,6 +63,8 @@ public:
 	string getText(){ return this->text; }
 	int getAlign(){ return this->align; }
 	int getSize(){ return this->size; }
+	int getWidth(){ return this->width; }
+	int getHeight(){ return this->height; }
 };
 
 #endif

@@ -26,11 +26,6 @@ class twoDObject;
 #include "objects/object.h"
 #include "base/background.h"
 
-// XXX DEBUG
-#include<iostream>
-using namespace std;
-#define DEBUG(MSG) cout << (MSG) << endl
-
 #define TWOD_FPS 30
 #define TWOD_LAYERS 16
 #define TWOD_OBJ_PER_LAYER 16
@@ -59,7 +54,6 @@ enum TWOD_KEYS {
 
 class twoDEngine {
 private:
-	ALLEGRO_DISPLAY *display;
 	int displayWidth;
 	int displayHeight;
 	bool key[TWOD_KEYS_COUNT];

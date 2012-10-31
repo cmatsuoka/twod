@@ -19,6 +19,8 @@
 
 #include "engine.h"
 
+ALLEGRO_DISPLAY *TWOD_DISPLAY;
+
 twoDEngine::twoDEngine(int width, int height){
 	this->displayWidth = width;
 	this->displayHeight = height;
@@ -171,6 +173,7 @@ void twoDEngine::main(){
 
 	// create display, timer and event queue
 	display = al_create_display(this->displayWidth, this->displayHeight);
+	TWOD_DISPLAY = display;
 	timer = al_create_timer(1.0 / TWOD_FPS);
 	event_queue = al_create_event_queue();
 
@@ -191,8 +194,10 @@ void twoDEngine::main(){
 			// draw all objects in layer order
 			for(int i=0; i<TWOD_LAYERS; i++)
 				for(int j=0; j<TWOD_OBJ_PER_LAYER; j++)
-					if((this->layer[i][j] != NULL) && (this->layer[i][j]->isVisible()))
-						this->layer[i][j]->draw();
+					if(this->layer[i][j] != NULL){
+						if(this->layer[i][j]->isVisible())
+							this->layer[i][j]->draw();
+					}
 					else
 						break;
 
@@ -322,6 +327,7 @@ void twoDEngine::main(){
 	al_destroy_event_queue(event_queue);
 	al_destroy_timer(timer);
 	al_destroy_display(display);
+	TWOD_DISPLAY = NULL;
 }
 
 void twoDEngine::finish(){

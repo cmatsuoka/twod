@@ -1,7 +1,7 @@
 #include "wall.h"
 
 
-twoDWall::twoDWall(string imgfile, int x, int y, int repeat){
+standingWall::standingWall(string imgfile, int x, int y, int repeat){
 	this->image = new twoDImage(imgfile);
 	this->image->setPosition(x, y);
 
@@ -18,19 +18,19 @@ twoDWall::twoDWall(string imgfile, int x, int y, int repeat){
 	this->movement = NULL;
 }
 
-void twoDWall::draw(){
+void standingWall::draw(){
 	for(int i=0; i<this->repeat; i++){
 		this->image->setPosition(this->x,this->y+(i*this->image->getHeight()-1));
 		this->image->draw();
 	}
 }
 
-void twoDWall::update(twoDEngine *engine){
+void standingWall::update(twoDEngine *engine){
 }
 
-void twoDWall::collision(twoDObject *obj, int position){
+void standingWall::collision(twoDObject *obj, int position){
 }
 
-void twoDWall::updatePosition(int oldX, int oldY){
+void standingWall::updatePosition(int oldX, int oldY){
 }
 

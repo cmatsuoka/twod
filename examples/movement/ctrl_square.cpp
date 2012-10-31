@@ -1,6 +1,6 @@
-#include "square.h"
+#include "ctrl_square.h"
 
-twoDSquare::twoDSquare(int size, twoDColor *color){
+controlledSquare::controlledSquare(int size, twoDColor *color){
 	this->primitive = new twoDPrimitive();
 	this->primitive->setColor(color);
 	this->primitive->setType(TWOD_PRIMITIVE_TRIANGLE_FAN);
@@ -21,7 +21,7 @@ twoDSquare::twoDSquare(int size, twoDColor *color){
 	this->movement = new twoDMovement(TWOD_MOVE_DIRECTION_E, 0, 0);
 }
 
-void twoDSquare::update(twoDEngine *engine){
+void controlledSquare::update(twoDEngine *engine){
 	bool up, down, left, right;
 	int dir;
 
@@ -69,7 +69,7 @@ void twoDSquare::update(twoDEngine *engine){
 	}
 }
 
-void twoDSquare::updatePosition(int oldX, int oldY){
+void controlledSquare::updatePosition(int oldX, int oldY){
 	int moveX, moveY;
 	
 	if(this->state == TWOD_STATE_COLLIDING){
@@ -84,11 +84,11 @@ void twoDSquare::updatePosition(int oldX, int oldY){
 	}
 }
 
-void twoDSquare::draw(){
+void controlledSquare::draw(){
 	this->primitive->draw();
 }
 
-void twoDSquare::collision(twoDObject *obj, int position){
+void controlledSquare::collision(twoDObject *obj, int position){
 	int moveX, moveY;
 //	int myDir;
 	bool onTop, onLeft, onRight, onBottom;

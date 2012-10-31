@@ -12,7 +12,7 @@ I'm developing this on my free time, so things are going slowly :(
 - framerate control
 - animated sprites
 - play sounds
-- text drawing
+- text drawing (with buffering)
 - draw objects according to layers
 - primitives support
 - texturized primitives

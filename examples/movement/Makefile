@@ -11,17 +11,20 @@ exec: all
 	./$(TARGET)
 
 # example code
-$(TARGET): $(TARGET).cpp engine.o image.o color.o background.o square.o sprite.o \
-	text.o sound.o primitive.o movement.o wall.o
+$(TARGET): $(TARGET).cpp engine.o image.o color.o background.o ctrl_square.o sprite.o \
+	text.o sound.o primitive.o movement.o wall.o info.o
 	$(CC) $(OPTS) $(CFLAGS) -o $(TARGET) $(TARGET).cpp engine.o image.o \
-		color.o background.o square.o sprite.o text.o sound.o primitive.o \
-		movement.o wall.o
+		color.o background.o ctrl_square.o sprite.o text.o sound.o primitive.o \
+		movement.o wall.o info.o
 
-square.o: square.h square.cpp
-	$(CC) $(OPTS) -c -o square.o square.cpp
+ctrl_square.o: ctrl_square.h ctrl_square.cpp
+	$(CC) $(OPTS) -c -o ctrl_square.o ctrl_square.cpp
 
 wall.o: wall.h wall.cpp
 	$(CC) $(OPTS) -c -o wall.o wall.cpp
+
+info.o: info.h info.cpp
+	$(CC) $(OPTS) -c -o info.o info.cpp
 
 # twoD engine code
 engine.o: $(TWODPATH)/engine.h $(TWODPATH)/engine.cpp

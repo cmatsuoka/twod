@@ -38,6 +38,10 @@ public:
 
 	ALLEGRO_COLOR map();
 
+	// getters
+	int getRed(){ return this->red; }
+	int getGreen(){ return this->green; }
+	int getBlue(){ return this->blue; }
 };
 
 #endif

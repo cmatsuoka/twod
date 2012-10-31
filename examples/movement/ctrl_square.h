@@ -1,5 +1,5 @@
-#ifndef _TWODSQUARE_H_
-#define _TWODSQUARE_H_
+#ifndef _CTRLSQUARE_H_
+#define _CTRLSQUARE_H_
 
 #include "../../twoD/objects/object.h"
 #include "../../twoD/base/color.h"
@@ -8,11 +8,11 @@
 
 #define SPEED_STEP 1
 
-class twoDSquare: public twoDObject {
+class controlledSquare: public twoDObject {
 	twoDPrimitive *primitive;
 
 public:
-	twoDSquare(int, twoDColor*);
+	controlledSquare(int, twoDColor*);
 	void draw();
 	void update(twoDEngine*);
 	void collision(twoDObject*,int);

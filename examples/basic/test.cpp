@@ -35,11 +35,9 @@ void twoDTest::updatePosition(int oldX, int oldY){
 }
 
 void twoDTest::draw(){
-	if(this->visible){
-		this->primitive->draw();
-		this->sprite->draw();
-		this->text->draw();
-	}
+	this->primitive->draw();
+	this->sprite->draw();
+	this->text->draw();
 }
 
 void twoDTest::update(twoDEngine *engine){
