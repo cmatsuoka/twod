@@ -49,12 +49,32 @@ twoDText::~twoDText(){
 }
 
 void twoDText::draw(){
-	al_draw_bitmap(this->buffer, this->x, this->y, 0);
+	int x, y;
+
+	x = y = 0;
+
+	switch(this->align){
+		case TWOD_TEXT_ALIGN_LEFT:
+			x = this->x;
+			y = this->y;
+			break;;
+		case TWOD_TEXT_ALIGN_CENTER:
+			x = this->x - (this->width/2) - 1;
+			y = this->y;
+			break;;
+		case TWOD_TEXT_ALIGN_RIGHT:
+			x = this->x - this->width - 1;
+			y = this->y;
+			break;;
+	}
+
+	al_draw_bitmap(this->buffer, x, y, 0);
 }
 
 void twoDText::setText(string text){
-	// buffer transparency
 	twoDColor *bufferAlpha;
+
+	// buffer transparency
 	bufferAlpha = new twoDColor((this->color->getRed()+50) % 256, 0, 0);
 
 	this->text = text;
@@ -69,7 +89,7 @@ void twoDText::setText(string text){
 	al_set_target_bitmap(this->buffer);
 	al_clear_to_color(bufferAlpha->map());
 	al_convert_mask_to_alpha(this->buffer, bufferAlpha->map());
-	al_draw_text(this->font, this->color->map(), 0, 0, this->align, this->text.c_str());
+	al_draw_text(this->font, this->color->map(), 0, 0, TWOD_TEXT_ALIGN_LEFT, this->text.c_str());
 	al_set_target_backbuffer(TWOD_DISPLAY);
 }
 

@@ -25,6 +25,10 @@ class twoDObject;
 
 #include "../objects/object.h"
 
+#define TWOD_MIN_SPEED 0
+#define TWOD_MAX_SPEED 600
+#define TWOD_MOVE_STEP 1
+
 enum TWOD_DIRECTIONS {
 	TWOD_MOVE_DIRECTION_N, // north
 	TWOD_MOVE_DIRECTION_E, // east
@@ -39,8 +43,8 @@ enum TWOD_DIRECTIONS {
 class twoDMovement {
 private:
 	int direction;
-	int speed;
-	int acceleration;
+	int speed; // pixels per second
+	int acceleration; 
 
 public:
 	twoDMovement(int, int, int);

@@ -55,7 +55,7 @@ public:
 		int oldY = this->y;
 		this->x += mx; 
 		this->y += my; 
-		this->updatePosition(oldX,oldY); 
+		this->updatePosition(oldX, oldY); 
 	}
 
 	// getters

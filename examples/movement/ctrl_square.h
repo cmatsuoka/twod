@@ -6,7 +6,7 @@
 #include "../../twoD/base/primitive.h"
 #include "../../twoD/base/movement.h"
 
-#define SPEED_STEP 1
+#define SPEED_STEP 10
 
 class controlledSquare: public twoDObject {
 	twoDPrimitive *primitive;

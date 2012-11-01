@@ -26,9 +26,11 @@ class twoDObject;
 #include "objects/object.h"
 #include "base/background.h"
 
-#define TWOD_FPS 30
 #define TWOD_LAYERS 16
 #define TWOD_OBJ_PER_LAYER 16
+
+// FPS
+const int TWOD_FPS = 60;
 
 enum TWOD_KEYS {
 	KEY_UP, KEY_DOWN, KEY_LEFT, KEY_RIGHT, KEY_SPACE, KEY_ESCAPE, KEY_ENTER,
@@ -51,6 +53,7 @@ enum TWOD_KEYS {
 #define TWOD_POSITION_BOTLEFT 5
 #define TWOD_POSITION_BOT 6
 #define TWOD_POSITION_BOTRIGHT 7
+#define TWOD_POSITION_INSIDE 8
 
 class twoDEngine {
 private:

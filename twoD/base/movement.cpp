@@ -19,6 +19,8 @@
 
 #include "movement.h"
 
+extern const int TWOD_FPS;
+
 twoDMovement::twoDMovement(int direction, int speed, int acceleration){
 	this->direction = direction;
 	this->speed = speed;
@@ -31,46 +33,63 @@ twoDMovement::~twoDMovement(){
 void twoDMovement::update(){
 	this->speed += this->acceleration;
 
-	if(this->speed < 0)
+	if(this->speed < TWOD_MIN_SPEED)
 		this->speed = 0;
+	else if(this->speed > TWOD_MAX_SPEED)
+		this->speed = TWOD_MAX_SPEED;
 
 	// TODO physics here ??
 }
 
 void twoDMovement::apply(twoDObject *obj){
-	int moveX, moveY;
+	static float stepCount = 0;
+	float stepSize;
+	int moveX, moveY, steps;
+
+	if(this->speed == 0)
+		return;
 
 	moveX = 0;
 	moveY = 0;
+	stepSize = (float)this->speed/TWOD_FPS;
+
+	stepCount += stepSize;
+	
+	if(stepCount >= TWOD_MOVE_STEP){
+		steps = stepCount / TWOD_MOVE_STEP;
+		stepCount = 0;
+	}
+	else
+		return;
 
 	switch(this->direction){
 		case TWOD_MOVE_DIRECTION_N:
-			moveY -= this->speed;
+			moveY -= steps;
 			break;
 		case TWOD_MOVE_DIRECTION_S:
-			moveY += this->speed;
+			moveY += steps;
 			break;
 		case TWOD_MOVE_DIRECTION_E:
-			moveX += this->speed;
+			moveX += steps;
 			break;
 		case TWOD_MOVE_DIRECTION_W:
-			moveX -= this->speed;
+			moveX -= steps;
 			break;
 		case TWOD_MOVE_DIRECTION_NE:
-			moveX += this->speed;
-			moveY -= this->speed;
+			moveX += steps;
+			moveY -= steps;
 			break;
 		case TWOD_MOVE_DIRECTION_NW:
-			moveX -= this->speed;
-			moveY -= this->speed;
+			moveX -= steps;
+			moveY -= steps;
 			break;
 		case TWOD_MOVE_DIRECTION_SE:
-			moveX += this->speed;
-			moveY += this->speed;
+			moveX += steps;
+			moveY += steps;
 			break;
 		case TWOD_MOVE_DIRECTION_SW:
-			moveX -= this->speed;
-			moveY += this->speed;
+			moveX -= steps;
+			moveY += steps;
 			break;
 	}
 

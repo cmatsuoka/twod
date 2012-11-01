@@ -160,6 +160,10 @@ int twoDEngine::getCollisionPosition(twoDObject *obj1, twoDObject *obj2){
 	else if((obj1X4 > obj2X4) && (obj1Y4 < obj2Y4)){
 		position = TWOD_POSITION_BOTRIGHT;
 	}
+	// position inside
+	else if((obj1X1>obj2X1) && (obj1Y1>obj2Y1) && (obj1X4<obj2X4) && (obj1Y4<obj2Y4)){
+		position = TWOD_POSITION_INSIDE;
+	}
 
 	return position;
 }

@@ -120,6 +120,9 @@ void controlledSquare::collision(twoDObject *obj, int position){
 			break;
 		case TWOD_POSITION_BOTRIGHT:
 			break;
+		case TWOD_POSITION_INSIDE:
+			onRight = true;
+			break;
 	}
 
 	if(onRight)

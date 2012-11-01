@@ -44,7 +44,8 @@ int main(int argc, char *argv[]){
 	square2->setPosition(SQUARE2_X,SQUARE2_Y);
 	square2->getMovement()->setDirection(TWOD_MOVE_DIRECTION_W);
 
-	wall = new standingWall(string("resources/img/wall.png"), WALL_X, WALL_Y, WALL_REPEAT_IMG); 
+	//wall = new standingWall(string("resources/img/wall.png"), WALL_X, WALL_Y, WALL_REPEAT_IMG); 
+	wall = new standingWall(string("resources/img/wall_mini.png"), WALL_X, WALL_Y, 20); 
 
 	engine->addObject((twoDObject*)square1,5);
 //	engine->addObject((twoDObject*)square2,5);
