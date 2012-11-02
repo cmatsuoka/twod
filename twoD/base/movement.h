@@ -46,6 +46,8 @@ private:
 	int speed; // pixels per second
 	int acceleration; 
 
+	float stepCount;
+
 public:
 	twoDMovement(int, int, int);
 	~twoDMovement();

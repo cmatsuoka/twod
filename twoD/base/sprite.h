@@ -24,6 +24,7 @@
 #include<fstream>
 #include "image.h"
 #include "color.h"
+#include "../engine.h"
 using namespace std;
 
 class twoDSprite {
@@ -32,9 +33,9 @@ private:
 	int x, y;
 	int width, height;
 	int numImg;
-	int switchRatio;
-	int switchCount;
+	int switchRate;
 	int imgCount;
+	float switchCount;
 
 public:
 	twoDSprite(string); // sprite definition file
@@ -46,7 +47,7 @@ public:
 	// setters
 	void setSize(int,int);
 	void setPosition(int x, int y){ this->x = x; this->y = y; }
-	void setSwitchRatio(int s){ this->switchRatio = s; }
+	void setSwitchRate(int s){ this->switchRate = s; }
 
 	// getters
 	int getX(){ return this->x; }

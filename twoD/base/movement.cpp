@@ -19,12 +19,11 @@
 
 #include "movement.h"
 
-extern const int TWOD_FPS;
-
 twoDMovement::twoDMovement(int direction, int speed, int acceleration){
 	this->direction = direction;
 	this->speed = speed;
 	this->acceleration = acceleration;
+	this->stepCount = 0;
 }
 
 twoDMovement::~twoDMovement(){
@@ -42,7 +41,6 @@ void twoDMovement::update(){
 }
 
 void twoDMovement::apply(twoDObject *obj){
-	static float stepCount = 0;
 	float stepSize;
 	int moveX, moveY, steps;
 
@@ -53,11 +51,11 @@ void twoDMovement::apply(twoDObject *obj){
 	moveY = 0;
 	stepSize = (float)this->speed/TWOD_FPS;
 
-	stepCount += stepSize;
+	this->stepCount += stepSize;
 	
-	if(stepCount >= TWOD_MOVE_STEP){
-		steps = stepCount / TWOD_MOVE_STEP;
-		stepCount = 0;
+	if(this->stepCount >= TWOD_MOVE_STEP){
+		steps = this->stepCount / TWOD_MOVE_STEP;
+		this->stepCount = 0;
 	}
 	else
 		return;

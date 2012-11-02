@@ -26,7 +26,7 @@ twoDSprite::~twoDSprite(){
 
 // Format:
 //
-// NUM_FILES NUM_TOTAL_SUBIMGS SWITCH_RATIO
+// NUM_FILES NUM_TOTAL_SUBIMGS SWITCH_RATE
 // SPRITE_WIDTH SPRITE_HEIGHT
 // ALPHA_R ALPHA_G ALPHA_B
 // IMAGE_1_PATH
@@ -37,7 +37,7 @@ twoDSprite::~twoDSprite(){
 // ...
 twoDSprite::twoDSprite(string spritefile){
 	fstream f;
-	int numFiles, numImg, switchRatio, x, y, w, h;
+	int numFiles, numImg, switchRate, x, y, w, h;
 	int alphaR, alphaG, alphaB, k; 
 	string imgfile;
 	twoDImage **image;
@@ -46,7 +46,7 @@ twoDSprite::twoDSprite(string spritefile){
 
 	f.open(spritefile.c_str(), fstream::in);
 
-	f >> numFiles >> numImg >> switchRatio;
+	f >> numFiles >> numImg >> switchRate;
 	f >> w >> h;
 	f >> alphaR >> alphaG >> alphaB;
 
@@ -79,19 +79,20 @@ twoDSprite::twoDSprite(string spritefile){
 	this->height = h;
 	this->image = image;
 	this->numImg = numImg;
-	this->switchRatio = switchRatio;
-	this->switchCount = 0;
+	this->switchRate = switchRate;
 	this->imgCount = 0;
+	this->switchCount = 0;
 }
 
 void twoDSprite::draw(){
 	this->image[this->imgCount]->setPosition(this->x, this->y);
 	this->image[this->imgCount]->draw();
 
-	this->switchCount++;
-	if(this->switchCount >= this->switchRatio){
-		this->imgCount = (this->imgCount + 1) % this->numImg;
+	this->switchCount += (float)this->switchRate/TWOD_FPS;
+	
+	if(this->switchCount >= 1){
 		this->switchCount = 0;
+		this->imgCount = (this->imgCount + 1) % this->numImg;
 	}
 }
 
