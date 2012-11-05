@@ -117,6 +117,7 @@ int twoDEngine::getCollisionPosition(twoDObject *obj1, twoDObject *obj2){
 	int obj1Y1, obj1Y2, obj1Y3, obj1Y4;
 	int obj2X1, obj2X2, obj2X3, obj2X4;
 	int	obj2Y1, obj2Y2, obj2Y3, obj2Y4;
+	int obj1Dir;
 
 	obj1X1 = obj1X3 = obj1->getX();
 	obj1Y1 = obj1Y2 = obj1->getY();
@@ -128,36 +129,73 @@ int twoDEngine::getCollisionPosition(twoDObject *obj1, twoDObject *obj2){
 	obj2X2 = obj2X4 = obj2->getX() + obj2->getWidth() - 1;
 	obj2Y3 = obj2Y4 = obj2->getY() + obj2->getHeight() - 1;
 
+	if(obj1->getMovement() != NULL)
+		obj1Dir = obj1->getMovement()->getDirection();
+	else
+		obj1Dir = -1;
+
 	// position top left
-	if((obj1X1 < obj2X1) && (obj1Y1 < obj2Y1)){
+	if((obj1X1 < obj2X1) && (obj1Y1 < obj2Y1)
+		&& (obj1Dir != TWOD_MOVE_DIRECTION_W) 
+		&& (obj1Dir != TWOD_MOVE_DIRECTION_NW) 
+		&& (obj1Dir != TWOD_MOVE_DIRECTION_N)
+		){
 		position = TWOD_POSITION_TOPLEFT;
 	}
 	// position top
-	else if((obj1Y1 < obj2Y1) && (obj1X1 >= obj2X1) && (obj1X2 <= obj2X2)){
+	else if((obj1Y1 < obj2Y1) && (obj1X1 >= obj2X1) && (obj1X2 <= obj2X2)
+		&& (obj1Dir != TWOD_MOVE_DIRECTION_N) 
+		&& (obj1Dir != TWOD_MOVE_DIRECTION_NW) 
+		&& (obj1Dir != TWOD_MOVE_DIRECTION_NE)
+		){
 		position = TWOD_POSITION_TOP;
 	}
 	// position top right
-	else if((obj1X2 > obj2X2) && (obj1Y1 < obj2Y1)){
+	else if((obj1X2 > obj2X2) && (obj1Y1 < obj2Y1)
+		&& (obj1Dir != TWOD_MOVE_DIRECTION_E) 
+		&& (obj1Dir != TWOD_MOVE_DIRECTION_NE) 
+		&& (obj1Dir != TWOD_MOVE_DIRECTION_N)
+		){
 		position = TWOD_POSITION_TOPRIGHT;
 	}
 	// position left
-	else if((obj1X1 < obj2X1) && (obj1Y1 >= obj2Y1) && (obj1Y3 <= obj2Y3)){
+	else if((obj1X1 < obj2X1) && (obj1Y1 >= obj2Y1) && (obj1Y3 <= obj2Y3) 
+		&& (obj1Dir != TWOD_MOVE_DIRECTION_W) 
+		&& (obj1Dir != TWOD_MOVE_DIRECTION_SW) 
+		&& (obj1Dir != TWOD_MOVE_DIRECTION_NW)
+		){
 		position = TWOD_POSITION_LEFT;
 	}
 	// position right
-	else if((obj1X2 > obj2X2) && (obj1Y1 >= obj2Y1) && (obj1Y3 <= obj2Y4)){
+	else if((obj1X2 > obj2X2) && (obj1Y1 >= obj2Y1) && (obj1Y3 <= obj2Y4)
+		&& (obj1Dir != TWOD_MOVE_DIRECTION_E) 
+		&& (obj1Dir != TWOD_MOVE_DIRECTION_SE) 
+		&& (obj1Dir != TWOD_MOVE_DIRECTION_NE)
+		){
 		position = TWOD_POSITION_RIGHT;
 	}
 	// position bot left
-	else if((obj1X1 < obj2X1) && (obj1Y3 > obj2Y3)){
+	else if((obj1X1 < obj2X1) && (obj1Y3 > obj2Y3)
+		&& (obj1Dir != TWOD_MOVE_DIRECTION_W) 
+		&& (obj1Dir != TWOD_MOVE_DIRECTION_SW) 
+		&& (obj1Dir != TWOD_MOVE_DIRECTION_S)
+		){
 		position = TWOD_POSITION_BOTLEFT;
 	}
 	// position bot 
-	else if((obj1Y3 > obj2Y3) && (obj1X3 >= obj2X3) && (obj1X4 <= obj2X4)){
+	else if((obj1Y3 > obj2Y3) && (obj1X3 >= obj2X3) && (obj1X4 <= obj2X4)
+		&& (obj1Dir != TWOD_MOVE_DIRECTION_S) 
+		&& (obj1Dir != TWOD_MOVE_DIRECTION_SW) 
+		&& (obj1Dir != TWOD_MOVE_DIRECTION_SE)
+		){
 		position = TWOD_POSITION_BOT;
 	}
 	// position bot right
-	else if((obj1X4 > obj2X4) && (obj1Y4 < obj2Y4)){
+	else if((obj1X4 > obj2X4) && (obj1Y4 < obj2Y4)
+		&& (obj1Dir != TWOD_MOVE_DIRECTION_E) 
+		&& (obj1Dir != TWOD_MOVE_DIRECTION_SE) 
+		&& (obj1Dir != TWOD_MOVE_DIRECTION_S)
+		){
 		position = TWOD_POSITION_BOTRIGHT;
 	}
 	// position inside
