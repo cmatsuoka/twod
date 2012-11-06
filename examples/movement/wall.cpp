@@ -14,8 +14,10 @@ standingWall::standingWall(string imgfile, int x, int y, int repeat){
 	this->repeat = repeat;
 	this->x = x;
 	this->y = y;
+	this->oldX = x;
+	this->oldY = y;
 
-	this->movement = NULL;
+	this->movement = new twoDMovement(TWOD_MOVE_DIRECTION_NONE, 0, 0);
 }
 
 void standingWall::draw(){
@@ -31,6 +33,6 @@ void standingWall::update(twoDEngine *engine){
 void standingWall::collision(twoDObject *obj, int position){
 }
 
-void standingWall::updatePosition(int oldX, int oldY){
+void standingWall::updatePosition(){
 }
 

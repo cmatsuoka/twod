@@ -37,7 +37,8 @@ enum TWOD_DIRECTIONS {
 	TWOD_MOVE_DIRECTION_NE, // northeast
 	TWOD_MOVE_DIRECTION_NW, // northwest
 	TWOD_MOVE_DIRECTION_SE, // southeast
-	TWOD_MOVE_DIRECTION_SW // southwest
+	TWOD_MOVE_DIRECTION_SW, // southwest
+	TWOD_MOVE_DIRECTION_NONE // none
 };
 
 class twoDMovement {

@@ -1,5 +1,8 @@
 #include "ctrl_square.h"
 
+#include<iostream>
+using namespace std;
+
 controlledSquare::controlledSquare(int size, twoDColor *color){
 	this->primitive = new twoDPrimitive();
 	this->primitive->setColor(color);
@@ -13,12 +16,13 @@ controlledSquare::controlledSquare(int size, twoDColor *color){
 	this->y = 0;
 	this->visible = true;
 	this->collidable = true;
+	this->autoFixCollision = true;
 	this->layer = 0;
 	this->state = TWOD_STATE_STANDING;
 	this->width = size;
 	this->height = size;
 
-	this->movement = new twoDMovement(TWOD_MOVE_DIRECTION_E, 0, 0);
+	this->movement = new twoDMovement(TWOD_MOVE_DIRECTION_NONE, 0, 0);
 }
 
 void controlledSquare::update(twoDEngine *engine){
@@ -69,7 +73,7 @@ void controlledSquare::update(twoDEngine *engine){
 	}
 }
 
-void controlledSquare::updatePosition(int oldX, int oldY){
+void controlledSquare::updatePosition(){
 	int moveX, moveY;
 	
 	if(this->state == TWOD_STATE_COLLIDING){
@@ -77,9 +81,9 @@ void controlledSquare::updatePosition(int oldX, int oldY){
 	}
 
 	// update position if moved
-	if((this->x != oldX) || (this->y != oldY)){
-		moveX = this->x - oldX;
-		moveY = this->y - oldY;
+	if((this->x != this->oldX) || (this->y != this->oldY)){
+		moveX = this->x - this->oldX;
+		moveY = this->y - this->oldY;
 		this->primitive->move(moveX, moveY);
 	}
 }
@@ -89,52 +93,6 @@ void controlledSquare::draw(){
 }
 
 void controlledSquare::collision(twoDObject *obj, int position){
-	int moveX, moveY;
-//	int myDir;
-	bool onTop, onLeft, onRight, onBottom;
-
-//	myDir = this->movement->getDirection();
-	onTop = onLeft = onRight = onBottom = false;
-	this->state = TWOD_STATE_COLLIDING;
-	moveX = 0;
-	moveY = 0;
-
-	switch(position){
-		case TWOD_POSITION_TOPLEFT:
-			break;
-		case TWOD_POSITION_TOP:
-			onBottom = true;
-			break;
-		case TWOD_POSITION_TOPRIGHT:
-			break;
-		case TWOD_POSITION_LEFT:
-			onRight = true;
-			break;
-		case TWOD_POSITION_RIGHT:
-			onLeft = true;
-			break;
-		case TWOD_POSITION_BOTLEFT:
-			break;
-		case TWOD_POSITION_BOT:
-			onTop = true;
-			break;
-		case TWOD_POSITION_BOTRIGHT:
-			break;
-		case TWOD_POSITION_INSIDE:
-			onRight = true;
-			break;
-	}
-
-	if(onRight)
-		moveX = obj->getX() - (this->x + this->width);
-	else if(onLeft)
-		moveX = (obj->getX() + obj->getWidth()) - this->x;
-
-	if(onTop)
-		moveY = (obj->getY() + obj->getHeight()) - this->y;
-	else if(onBottom)
-		moveY = obj->getY() - (this->y + this->height);
-
-	this->move(moveX,moveY);
+	cout << "Square collided !" << endl;
 }
 

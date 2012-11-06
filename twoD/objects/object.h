@@ -35,15 +35,17 @@ class twoDMovement;
 
 class twoDObject {
 protected:
-	int x, y;
-	int width, height;
-	int layer;
-	int state;
-	bool visible;
-	bool collidable;
-	twoDMovement *movement;
+	int x = 0, y = 0;
+	int oldX = 0, oldY = 0;
+	int width = 0, height = 0;
+	int layer = 0;
+	int state = TWOD_STATE_STANDING;
+	bool visible = true;
+	bool collidable = true;
+	bool autoFixCollision = false;
+	twoDMovement *movement = 0;
 
-	virtual void updatePosition(int, int) = 0;
+	virtual void updatePosition() = 0;
 
 public:
 	virtual void draw() = 0;
@@ -51,20 +53,23 @@ public:
 	virtual void collision(twoDObject*,int) = 0;
 
 	void move(int mx, int my){ 
-		int oldX = this->x;
-		int oldY = this->y;
+		this->oldX = this->x;
+		this->oldY = this->y;
 		this->x += mx; 
 		this->y += my; 
-		this->updatePosition(oldX, oldY); 
+		this->updatePosition(); 
 	}
 
 	// getters
 	int getX(){ return this->x; }
 	int getY(){ return this->y; }
+	int getOldX(){ return this->oldX; }
+	int getOldY(){ return this->oldY; }
 	int getWidth(){ return this->width; }
 	int getHeight(){ return this->height; }
 	int getLayer(){ return this-> layer; }
 	int getState(){ return this->state; }
+	bool getAutoFixCollision(){ return this->autoFixCollision; }
 	twoDMovement * getMovement(){ return this->movement; }
 	bool isVisible(){ return this->visible; }
 	bool isCollidable(){ return this->collidable; }
@@ -75,12 +80,14 @@ public:
 	void setState(int s){ this->state = s; }
 	void setVisible(bool v){ this->visible = v; }
 	void setCollidable(bool c){ this->collidable = c; }
+	void setAutoFixCollision(bool a){ this->autoFixCollision = a; }
+	void setOldPosition(int x, int y){ this->oldX = this->x; this->oldY = this->y; }
 	void setPosition(int x, int y){ 
-		int oldX = this->x;
-		int oldY = this->y;
+		this->oldX = this->x;
+		this->oldY = this->y;
 		this->x = x; 
 		this->y = y; 
-		this->updatePosition(oldX, oldY); 
+		this->updatePosition(); 
 	}
 };
 

@@ -67,6 +67,7 @@ private:
 	// collision
 	void checkLayerCollision(twoDObject**,int); 
 	int getCollisionPosition(twoDObject*, twoDObject*);
+	void autoFixCollision(twoDObject*, twoDObject*, int);
 
 public:
 	twoDEngine(int width, int height);

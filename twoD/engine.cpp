@@ -63,8 +63,8 @@ bool twoDEngine::addObject(twoDObject *obj){
 }
 
 void twoDEngine::checkLayerCollision(twoDObject *obj[], int num){
-	int i, j, pos;
-	int obj1X, obj1Y, obj1W, obj1H;
+	int i, j, pos1, pos2;
+	int obj1X, obj1Y, obj1W, obj1H, oldObj1X, oldObj1Y;
 	int obj2X, obj2Y, obj2W, obj2H;
 	bool xCollision, yCollision;
 
@@ -83,6 +83,8 @@ void twoDEngine::checkLayerCollision(twoDObject *obj[], int num){
 			obj1Y = obj[i]->getY();
 			obj1W = obj[i]->getWidth();
 			obj1H = obj[i]->getHeight();
+			oldObj1X = obj[i]->getOldX();
+			oldObj1Y = obj[i]->getOldY();
 			obj2X = obj[j]->getX();
 			obj2Y = obj[j]->getY();
 			obj2W = obj[j]->getWidth();
@@ -93,28 +95,44 @@ void twoDEngine::checkLayerCollision(twoDObject *obj[], int num){
 				xCollision = true;
 			else if((obj1X >= obj2X) && (obj1X <= (obj2X+obj2W-1)))
 				xCollision = true;
+			else if(((oldObj1X+obj1W-1) <= obj2X) && (obj1X > obj2X))
+				xCollision = true;
+			else if(((obj1X+obj1W-1) < (obj2X+obj2W-1)) && (oldObj1X >= (obj2X+obj2W-1)))
+				xCollision = true;
 			
 			// Y axis
 			if((obj2Y >= obj1Y) && (obj2Y <= (obj1Y+obj1H-1)))
 				yCollision = true;
 			else if((obj1Y >= obj2Y) && (obj1Y <= (obj2Y+obj2H-1)))
 				yCollision = true;
+			else if(((oldObj1Y+obj1H-1) <= obj2Y) && (obj1Y > obj2Y))
+				yCollision = true;
+			else if(((obj1Y+obj1H-1) < (obj2Y+obj2H-1)) && (obj1Y >= (obj2Y+obj2H-1)))
+				yCollision = true;
 
 			if(xCollision && yCollision){
-				pos = this->getCollisionPosition(obj[i],obj[j]);
-				obj[i]->collision(obj[j], pos);
-				pos = this->getCollisionPosition(obj[j],obj[i]);
-				obj[j]->collision(obj[i], pos);
+				pos1 = this->getCollisionPosition(obj[i],obj[j]);
+				pos2 = this->getCollisionPosition(obj[j],obj[i]);
+
+				if(obj[i]->getAutoFixCollision())
+					this->autoFixCollision(obj[i], obj[j], pos1);
+				obj[i]->collision(obj[j], pos1);
+				
+				if(obj[j]->getAutoFixCollision())
+					this->autoFixCollision(obj[j], obj[i], pos2);
+				obj[j]->collision(obj[i], pos2);
 			}
 		}
 	}
 }
 
 int twoDEngine::getCollisionPosition(twoDObject *obj1, twoDObject *obj2){
-	int position = 0;
+	int position = -1;
 
 	int obj1X1, obj1X2, obj1X3, obj1X4;
+	int oldObj1X1, oldObj1X2, oldObj1X3, oldObj1X4;
 	int obj1Y1, obj1Y2, obj1Y3, obj1Y4;
+	int oldObj1Y1, oldObj1Y2;
 	int obj2X1, obj2X2, obj2X3, obj2X4;
 	int	obj2Y1, obj2Y2, obj2Y3, obj2Y4;
 	int obj1Dir;
@@ -123,6 +141,9 @@ int twoDEngine::getCollisionPosition(twoDObject *obj1, twoDObject *obj2){
 	obj1Y1 = obj1Y2 = obj1->getY();
 	obj1X2 = obj1X4 = obj1->getX() + obj1->getWidth() - 1;
 	obj1Y3 = obj1Y4 = obj1->getY() + obj1->getHeight() - 1;
+	oldObj1X1 = oldObj1X3 = obj1->getOldX();
+	oldObj1Y1 = oldObj1Y2 = obj1->getOldY();
+	oldObj1X2 = oldObj1X4 = obj1->getOldX() + obj1->getWidth() - 1;
 	
 	obj2X1 = obj2X3 = obj2->getX();
 	obj2Y1 = obj2Y2 = obj2->getY();
@@ -191,7 +212,7 @@ int twoDEngine::getCollisionPosition(twoDObject *obj1, twoDObject *obj2){
 		position = TWOD_POSITION_BOT;
 	}
 	// position bot right
-	else if((obj1X4 > obj2X4) && (obj1Y4 < obj2Y4)
+	else if((obj1X4 > obj2X4) && (obj1Y4 > obj2Y4)
 		&& (obj1Dir != TWOD_MOVE_DIRECTION_E) 
 		&& (obj1Dir != TWOD_MOVE_DIRECTION_SE) 
 		&& (obj1Dir != TWOD_MOVE_DIRECTION_S)
@@ -199,13 +220,28 @@ int twoDEngine::getCollisionPosition(twoDObject *obj1, twoDObject *obj2){
 		position = TWOD_POSITION_BOTRIGHT;
 	}
 	// position inside
-	else if((obj1X1>obj2X1) && (obj1Y1>obj2Y1) && (obj1X4<obj2X4) && (obj1Y4<obj2Y4)){
+	else if((obj1X1>=obj2X1) && (obj1Y1>=obj2Y1) && (obj1X4<=obj2X4) && (obj1Y4<=obj2Y4)){
 		position = TWOD_POSITION_INSIDE;
+	}
+	// passed through left
+	else if((oldObj1X2 <= obj2X1) && (obj1X1 >= obj2X1)){
+		position = TWOD_POSITION_LEFT;
+	}
+	// passed through right
+	else if((obj1X2 <= obj2X2) && (oldObj1X1 >= obj2X2)){
+		position = TWOD_POSITION_RIGHT;
+	}
+	// passed through top
+	else if((oldObj1Y2 <= obj2Y1) && (obj1Y1 >= obj2Y1)){
+		position = TWOD_POSITION_TOP;
+	}
+	// passed through bottom
+	else if((obj1Y2 <= obj2Y2) && (oldObj1Y1 >= obj2Y2)){
+			position = TWOD_POSITION_BOT;
 	}
 
 	return position;
 }
-
 
 void twoDEngine::main(){
 	ALLEGRO_DISPLAY *display;
@@ -374,5 +410,144 @@ void twoDEngine::main(){
 
 void twoDEngine::finish(){
 	this->end = true;
+}
+
+void twoDEngine::autoFixCollision(twoDObject *obj1, twoDObject *obj2, int position){
+	int moveX, moveY;
+	int obj1X, obj1Y, obj1W, obj1H;
+	int obj1Dir, obj1OldX, obj1OldY;
+	bool onTop, onLeft, onRight, onBottom;
+
+	obj1X = obj1->getX();
+	obj1Y = obj1->getY();
+	obj1W = obj1->getWidth();
+	obj1H = obj1->getHeight();
+	obj1OldX = obj1->getOldX();
+	obj1OldY = obj1->getOldY();
+
+	obj1Dir = obj1->getMovement()->getDirection();
+	onTop = onLeft = onRight = onBottom = false;
+	obj1->setState(TWOD_STATE_COLLIDING);
+	moveX = 0;
+	moveY = 0;
+
+	switch(position){
+		case TWOD_POSITION_TOPLEFT:
+			switch(obj1Dir){
+				case TWOD_MOVE_DIRECTION_E:
+					onRight = true;
+					break;
+				case TWOD_MOVE_DIRECTION_S:
+					onBottom = true;
+					break;
+				case TWOD_MOVE_DIRECTION_SE:
+					if((obj1OldX + obj1W - 1) > obj2->getX())
+						onBottom = true;
+					else
+						onRight = true;
+					break;
+				case TWOD_MOVE_DIRECTION_NE:
+					onRight = true;
+					break;
+				case TWOD_MOVE_DIRECTION_SW:
+					onBottom = true;
+					break;
+			}
+			break;
+		case TWOD_POSITION_TOP:
+			onBottom = true;
+			break;
+		case TWOD_POSITION_TOPRIGHT:
+			switch(obj1Dir){
+				case TWOD_MOVE_DIRECTION_W:
+					onLeft = true;
+					break;
+				case TWOD_MOVE_DIRECTION_S:
+					onBottom = true;
+					break;
+				case TWOD_MOVE_DIRECTION_SW:
+					if(obj1OldX < (obj2->getX() + obj2->getWidth() - 1))
+						onBottom = true;
+					else
+						onLeft = true;
+					break;
+				case TWOD_MOVE_DIRECTION_NW:
+					onLeft = true;
+					break;
+				case TWOD_MOVE_DIRECTION_SE:
+					onBottom = true;
+					break;
+			}
+			break;
+		case TWOD_POSITION_LEFT:
+			onRight = true;
+			break;
+		case TWOD_POSITION_RIGHT:
+			onLeft = true;
+			break;
+		case TWOD_POSITION_BOTLEFT:
+			switch(obj1Dir){
+				case TWOD_MOVE_DIRECTION_E:
+					onRight = true;
+					break;
+				case TWOD_MOVE_DIRECTION_N:
+					onTop = true;
+					break;
+				case TWOD_MOVE_DIRECTION_NE:
+					if((obj1OldX + obj1W - 1) > obj2->getX())
+						onTop = true;
+					else
+						onRight = true;
+					break;
+				case TWOD_MOVE_DIRECTION_SE:
+					onRight = true;
+					break;
+				case TWOD_MOVE_DIRECTION_NW:
+					onTop = true;
+					break;
+			}
+			break;
+		case TWOD_POSITION_BOT:
+			onTop = true;
+			break;
+		case TWOD_POSITION_BOTRIGHT:
+			switch(obj1Dir){
+				case TWOD_MOVE_DIRECTION_W:
+					onLeft = true;
+					break;
+				case TWOD_MOVE_DIRECTION_N:
+					onTop = true;
+					break;
+				case TWOD_MOVE_DIRECTION_NW:
+					if(obj1OldX < (obj2->getX() + obj2->getWidth() - 1))
+						onTop = true;
+					else
+						onLeft = true;
+					break;
+				case TWOD_MOVE_DIRECTION_SW:
+					onLeft = true;
+					break;
+				case TWOD_MOVE_DIRECTION_NE:
+					onTop = true;
+					break;
+			}
+			break;
+		case TWOD_POSITION_INSIDE:
+			// TODO
+			break;
+	}
+
+	if(onRight)
+		moveX = obj2->getX() - (obj1X + obj1W);
+	else if(onLeft)
+		moveX = (obj2->getX() + obj2->getWidth()) - obj1X;
+
+	if(onTop)
+		moveY = (obj2->getY() + obj2->getHeight()) - obj1Y;
+	else if(onBottom)
+		moveY = obj2->getY() - (obj1Y + obj1H);
+
+	obj1->move(moveX,moveY);
+	obj1->setOldPosition(obj1OldX, obj1OldY);
 }
 

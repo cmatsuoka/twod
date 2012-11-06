@@ -16,7 +16,7 @@ public:
 	void draw();
 	void update(twoDEngine*);
 	void collision(twoDObject*,int);
-	void updatePosition(int, int);
+	void updatePosition();
 };
 
 #endif

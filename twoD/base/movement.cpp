@@ -44,7 +44,7 @@ void twoDMovement::apply(twoDObject *obj){
 	float stepSize;
 	int moveX, moveY, steps;
 
-	if(this->speed == 0)
+	if((this->speed == 0) || (this->direction == TWOD_MOVE_DIRECTION_NONE))
 		return;
 
 	moveX = 0;

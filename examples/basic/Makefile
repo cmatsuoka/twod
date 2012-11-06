@@ -1,5 +1,5 @@
 CC=g++
-OPTS=-O3 -Wall
+OPTS=-O3 -Wall -std=gnu++11
 CFLAGS=`pkg-config --cflags --libs allegro-5.0 allegro_image-5.0 allegro_font-5.0 \
 	allegro_ttf-5.0 allegro_audio-5.0 allegro_acodec-5.0 allegro_primitives-5.0`
 TWODPATH=../../twoD

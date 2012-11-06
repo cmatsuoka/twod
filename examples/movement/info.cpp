@@ -28,6 +28,6 @@ void infoWindow::update(twoDEngine *engine){
 void infoWindow::collision(twoDObject *obj, int position){
 }
 
-void infoWindow::updatePosition(int oldX, int oldY){
+void infoWindow::updatePosition(){
 }
 
