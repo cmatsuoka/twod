@@ -23,6 +23,7 @@ void infoWindow::draw(){
 }
 
 void infoWindow::update(twoDEngine *engine){
+	this->moved = false;
 }
 
 void infoWindow::collision(twoDObject *obj, int position){

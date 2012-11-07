@@ -69,10 +69,10 @@ void twoDEngine::checkLayerCollision(twoDObject *obj[], int num){
 	bool xCollision, yCollision;
 
 	for(i=0; i<num; i++){
-		if(! obj[i]->isCollidable())
+		if((! obj[i]->isCollidable()) || (! obj[i]->hasMoved()))
 			continue;
-		for(j=i+1; j<num; j++){
-			if(! obj[j]->isCollidable())
+		for(j=0; j<num; j++){
+			if((! obj[j]->isCollidable()) || (i == j))
 				continue;
 	
 			xCollision = false;
@@ -702,5 +702,28 @@ void twoDEngine::autoRedirectCollision(twoDObject *obj1, twoDObject *obj2, int p
 			}
 			break;
 	}
+}
+
+twoDObject * twoDEngine::removeObject(twoDObject *obj){
+	int layer, i, k;
+
+	layer = obj->getLayer();
+	k = -1;
+
+	for(i=0; i<TWOD_OBJ_PER_LAYER; i++){
+		if(this->layer[layer][i] == NULL)
+			break;
+		if(this->layer[layer][i] == obj)
+			k = i;
+	}
+	i--;
+
+	if(k != -1){
+		this->layer[layer][k] = this->layer[layer][i];
+		this->layer[layer][i] = NULL;
+		return obj;
+	}
+	
+	return NULL;
 }
 

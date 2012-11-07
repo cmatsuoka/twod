@@ -25,6 +25,8 @@ controlledSquare::controlledSquare(int size, twoDColor *color){
 void controlledSquare::update(twoDEngine *engine){
 	bool up, down, left, right;
 	int dir;
+	
+	this->moved = false;
 
 	up = down = left = right = false;
 	dir = -1;

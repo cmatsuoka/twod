@@ -24,6 +24,7 @@ movingSquare::movingSquare(int size, twoDColor *color){
 }
 
 void movingSquare::update(twoDEngine *engine){
+	this->moved = false;
 	this->movement->update();
 	this->movement->apply((twoDObject*)this);
 }

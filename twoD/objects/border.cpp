@@ -56,6 +56,7 @@ twoDBorder::twoDBorder(int border, int displayW, int displayH){
 }
 
 void twoDBorder::update(twoDEngine *engine){
+	this->moved = false;
 }
 
 void twoDBorder::updatePosition(){

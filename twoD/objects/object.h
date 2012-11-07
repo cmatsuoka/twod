@@ -40,6 +40,7 @@ protected:
 	int width = 0, height = 0;
 	int layer = 0;
 	int state = TWOD_STATE_STANDING;
+	bool moved = false;
 	bool visible = true;
 	bool collidable = true;
 	bool autoFixCollision = false;
@@ -57,7 +58,8 @@ public:
 		this->oldX = this->x;
 		this->oldY = this->y;
 		this->x += mx; 
-		this->y += my; 
+		this->y += my;
+		this->moved = true;
 		this->updatePosition(); 
 	}
 
@@ -75,6 +77,7 @@ public:
 	twoDMovement * getMovement(){ return this->movement; }
 	bool isVisible(){ return this->visible; }
 	bool isCollidable(){ return this->collidable; }
+	bool hasMoved(){ return this->moved; }
 
 	// setters
 	void setSize(int w, int h){ this->width = w; this->height = h; }
@@ -88,12 +91,14 @@ public:
 	void setInitialPosition(int x, int y){ 
 		this->setPosition(x,y); 
 		this->setOldPosition(this->x, this->y);
+		this->moved = false;
 	}		
 	void setPosition(int x, int y){ 
 		this->oldX = this->x;
 		this->oldY = this->y;
 		this->x = x; 
 		this->y = y; 
+		this->moved = true;
 		this->updatePosition(); 
 	}
 };

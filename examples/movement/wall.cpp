@@ -28,6 +28,7 @@ void standingWall::draw(){
 }
 
 void standingWall::update(twoDEngine *engine){
+	this->moved = false;
 }
 
 void standingWall::collision(twoDObject *obj, int position){
