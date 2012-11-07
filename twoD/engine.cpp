@@ -116,10 +116,14 @@ void twoDEngine::checkLayerCollision(twoDObject *obj[], int num){
 
 				if(obj[i]->getAutoFixCollision())
 					this->autoFixCollision(obj[i], obj[j], pos1);
+				if(obj[i]->getAutoRedirectCollision())
+					this->autoRedirectCollision(obj[i], obj[j], pos1);
 				obj[i]->collision(obj[j], pos1);
 				
 				if(obj[j]->getAutoFixCollision())
 					this->autoFixCollision(obj[j], obj[i], pos2);
+				if(obj[j]->getAutoRedirectCollision())
+					this->autoRedirectCollision(obj[j], obj[i], pos2);
 				obj[j]->collision(obj[i], pos2);
 			}
 		}
@@ -532,9 +536,6 @@ void twoDEngine::autoFixCollision(twoDObject *obj1, twoDObject *obj2, int positi
 					break;
 			}
 			break;
-		case TWOD_POSITION_INSIDE:
-			// TODO
-			break;
 	}
 
 	if(onRight)
@@ -549,5 +550,157 @@ void twoDEngine::autoFixCollision(twoDObject *obj1, twoDObject *obj2, int positi
 
 	obj1->move(moveX,moveY);
 	obj1->setOldPosition(obj1OldX, obj1OldY);
+}
+
+void twoDEngine::autoRedirectCollision(twoDObject *obj1, twoDObject *obj2, int position){
+	int obj1Dir;
+	twoDMovement *obj1Mv;
+
+	obj1Mv = obj1->getMovement();
+	obj1Dir = obj1Mv->getDirection();
+	obj1->setState(TWOD_STATE_COLLIDING);
+
+	switch(position){
+		case TWOD_POSITION_TOP:
+			switch(obj1Dir){
+				case TWOD_MOVE_DIRECTION_S:
+					obj1Mv->setDirection(TWOD_MOVE_DIRECTION_N);
+					break;
+				case TWOD_MOVE_DIRECTION_SW:
+					obj1Mv->setDirection(TWOD_MOVE_DIRECTION_NW);
+					break;
+				case TWOD_MOVE_DIRECTION_SE:
+					obj1Mv->setDirection(TWOD_MOVE_DIRECTION_NE);
+					break;
+			}
+			break;
+		case TWOD_POSITION_RIGHT:
+			switch(obj1Dir){
+				case TWOD_MOVE_DIRECTION_W:
+					obj1Mv->setDirection(TWOD_MOVE_DIRECTION_E);
+					break;
+				case TWOD_MOVE_DIRECTION_NW:
+					obj1Mv->setDirection(TWOD_MOVE_DIRECTION_NE);
+					break;
+				case TWOD_MOVE_DIRECTION_SW:
+					obj1Mv->setDirection(TWOD_MOVE_DIRECTION_SE);
+					break;
+			}
+			break;
+		case TWOD_POSITION_BOT:
+			switch(obj1Dir){
+				case TWOD_MOVE_DIRECTION_N:
+					obj1Mv->setDirection(TWOD_MOVE_DIRECTION_S);
+					break;
+				case TWOD_MOVE_DIRECTION_NW:
+					obj1Mv->setDirection(TWOD_MOVE_DIRECTION_SW);
+					break;
+				case TWOD_MOVE_DIRECTION_NE:
+					obj1Mv->setDirection(TWOD_MOVE_DIRECTION_SE);
+					break;
+			}
+			break;
+		case TWOD_POSITION_LEFT:
+			switch(obj1Dir){
+				case TWOD_MOVE_DIRECTION_E:
+					obj1Mv->setDirection(TWOD_MOVE_DIRECTION_W);
+					break;
+				case TWOD_MOVE_DIRECTION_NE:
+					obj1Mv->setDirection(TWOD_MOVE_DIRECTION_NW);
+					break;
+				case TWOD_MOVE_DIRECTION_SE:
+					obj1Mv->setDirection(TWOD_MOVE_DIRECTION_SW);
+					break;
+			}
+			break;
+		case TWOD_POSITION_TOPRIGHT:
+			switch(obj1Dir){
+				case TWOD_MOVE_DIRECTION_W:
+					obj1Mv->setDirection(TWOD_MOVE_DIRECTION_E);
+					break;
+				case TWOD_MOVE_DIRECTION_NW:
+					obj1Mv->setDirection(TWOD_MOVE_DIRECTION_NE);
+					break;
+				case TWOD_MOVE_DIRECTION_SW:
+					if(obj1->getOldX() < (obj2->getX() + obj2->getWidth() - 1))
+						obj1Mv->setDirection(TWOD_MOVE_DIRECTION_NW);
+					else
+						obj1Mv->setDirection(TWOD_MOVE_DIRECTION_SE);
+					break;
+				case TWOD_MOVE_DIRECTION_S:
+					obj1Mv->setDirection(TWOD_MOVE_DIRECTION_N);
+					break;
+				case TWOD_MOVE_DIRECTION_SE:
+					obj1Mv->setDirection(TWOD_MOVE_DIRECTION_NE);
+					break;
+			}
+			break;
+		case TWOD_POSITION_TOPLEFT:
+			switch(obj1Dir){
+				case TWOD_MOVE_DIRECTION_E:
+					obj1Mv->setDirection(TWOD_MOVE_DIRECTION_W);
+					break;
+				case TWOD_MOVE_DIRECTION_NE:
+					obj1Mv->setDirection(TWOD_MOVE_DIRECTION_NW);
+					break;
+				case TWOD_MOVE_DIRECTION_SE:
+					if((obj1->getOldX() + obj1->getWidth() - 1) > obj2->getX())
+						obj1Mv->setDirection(TWOD_MOVE_DIRECTION_NE);
+					else
+						obj1Mv->setDirection(TWOD_MOVE_DIRECTION_SW);
+					break;
+				case TWOD_MOVE_DIRECTION_S:
+					obj1Mv->setDirection(TWOD_MOVE_DIRECTION_N);
+					break;
+				case TWOD_MOVE_DIRECTION_SW:
+					obj1Mv->setDirection(TWOD_MOVE_DIRECTION_NW);
+					break;
+			}
+			break;
+		case TWOD_POSITION_BOTLEFT:
+			switch(obj1Dir){
+				case TWOD_MOVE_DIRECTION_E:
+					obj1Mv->setDirection(TWOD_MOVE_DIRECTION_W);
+					break;
+				case TWOD_MOVE_DIRECTION_SE:
+					obj1Mv->setDirection(TWOD_MOVE_DIRECTION_SW);
+					break;
+				case TWOD_MOVE_DIRECTION_NE:
+					if((obj1->getOldX() + obj1->getWidth() - 1) > obj2->getX())
+						obj1Mv->setDirection(TWOD_MOVE_DIRECTION_SE);
+					else
+						obj1Mv->setDirection(TWOD_MOVE_DIRECTION_NW);
+					break;
+				case TWOD_MOVE_DIRECTION_N:
+					obj1Mv->setDirection(TWOD_MOVE_DIRECTION_S);
+					break;
+				case TWOD_MOVE_DIRECTION_NW:
+					obj1Mv->setDirection(TWOD_MOVE_DIRECTION_SW);
+					break;
+			}
+			break;
+		case TWOD_POSITION_BOTRIGHT:
+			switch(obj1Dir){
+				case TWOD_MOVE_DIRECTION_W:
+					obj1Mv->setDirection(TWOD_MOVE_DIRECTION_E);
+					break;
+				case TWOD_MOVE_DIRECTION_SW:
+					obj1Mv->setDirection(TWOD_MOVE_DIRECTION_SE);
+					break;
+				case TWOD_MOVE_DIRECTION_NW:
+					if(obj1->getOldX() < (obj2->getX() + obj2->getWidth() - 1))
+						obj1Mv->setDirection(TWOD_MOVE_DIRECTION_SW);
+					else
+						obj1Mv->setDirection(TWOD_MOVE_DIRECTION_NE);
+					break;
+				case TWOD_MOVE_DIRECTION_N:
+					obj1Mv->setDirection(TWOD_MOVE_DIRECTION_S);
+					break;
+				case TWOD_MOVE_DIRECTION_NE:
+					obj1Mv->setDirection(TWOD_MOVE_DIRECTION_SE);
+					break;
+			}
+			break;
+	}
 }
 

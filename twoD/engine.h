@@ -27,7 +27,7 @@ class twoDObject;
 #include "base/background.h"
 
 #define TWOD_LAYERS 16
-#define TWOD_OBJ_PER_LAYER 16
+#define TWOD_OBJ_PER_LAYER 32
 
 // FPS
 const int TWOD_FPS = 60;
@@ -45,15 +45,17 @@ enum TWOD_KEYS {
 #define CASE_KEY(NAME, VALUE) case ALLEGRO_KEY_##NAME: this->key[KEY_##NAME] = (VALUE); break
 
 // collision positions
-#define TWOD_POSITION_TOPLEFT 0
-#define TWOD_POSITION_TOP 1
-#define TWOD_POSITION_TOPRIGHT 2
-#define TWOD_POSITION_LEFT 3
-#define TWOD_POSITION_RIGHT 4
-#define TWOD_POSITION_BOTLEFT 5
-#define TWOD_POSITION_BOT 6
-#define TWOD_POSITION_BOTRIGHT 7
-#define TWOD_POSITION_INSIDE 8
+enum TWOD_POSITIONS {
+	TWOD_POSITION_TOPLEFT,
+	TWOD_POSITION_TOP,
+	TWOD_POSITION_TOPRIGHT,
+	TWOD_POSITION_LEFT,
+	TWOD_POSITION_RIGHT,
+	TWOD_POSITION_BOTLEFT,
+	TWOD_POSITION_BOT,
+	TWOD_POSITION_BOTRIGHT,
+	TWOD_POSITION_INSIDE
+};
 
 class twoDEngine {
 private:
@@ -68,6 +70,7 @@ private:
 	void checkLayerCollision(twoDObject**,int); 
 	int getCollisionPosition(twoDObject*, twoDObject*);
 	void autoFixCollision(twoDObject*, twoDObject*, int);
+	void autoRedirectCollision(twoDObject*, twoDObject*, int);
 
 public:
 	twoDEngine(int width, int height);

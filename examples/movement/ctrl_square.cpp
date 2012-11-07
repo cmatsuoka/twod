@@ -1,8 +1,5 @@
 #include "ctrl_square.h"
 
-#include<iostream>
-using namespace std;
-
 controlledSquare::controlledSquare(int size, twoDColor *color){
 	this->primitive = new twoDPrimitive();
 	this->primitive->setColor(color);
@@ -80,12 +77,9 @@ void controlledSquare::updatePosition(){
 		this->state = TWOD_STATE_MOVING;
 	}
 
-	// update position if moved
-	if((this->x != this->oldX) || (this->y != this->oldY)){
-		moveX = this->x - this->oldX;
-		moveY = this->y - this->oldY;
-		this->primitive->move(moveX, moveY);
-	}
+	moveX = this->x - this->oldX;
+	moveY = this->y - this->oldY;
+	this->primitive->move(moveX, moveY);
 }
 
 void controlledSquare::draw(){
@@ -93,6 +87,5 @@ void controlledSquare::draw(){
 }
 
 void controlledSquare::collision(twoDObject *obj, int position){
-	cout << "Square collided !" << endl;
 }
 

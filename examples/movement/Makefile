@@ -12,13 +12,16 @@ exec: all
 
 # example code
 $(TARGET): $(TARGET).cpp engine.o image.o color.o background.o ctrl_square.o sprite.o \
-	text.o sound.o primitive.o movement.o wall.o info.o
+	text.o sound.o primitive.o movement.o wall.o info.o border.o moving_square.o
 	$(CC) $(OPTS) $(CFLAGS) -o $(TARGET) $(TARGET).cpp engine.o image.o \
 		color.o background.o ctrl_square.o sprite.o text.o sound.o primitive.o \
-		movement.o wall.o info.o
+		movement.o wall.o info.o border.o moving_square.o
 
 ctrl_square.o: ctrl_square.h ctrl_square.cpp
 	$(CC) $(OPTS) -c -o ctrl_square.o ctrl_square.cpp
+
+moving_square.o: moving_square.h moving_square.cpp
+	$(CC) $(OPTS) -c -o moving_square.o moving_square.cpp
 
 wall.o: wall.h wall.cpp
 	$(CC) $(OPTS) -c -o wall.o wall.cpp
@@ -53,6 +56,9 @@ primitive.o: $(TWODPATH)/base/primitive.h $(TWODPATH)/base/primitive.cpp
 
 movement.o: $(TWODPATH)/base/movement.h $(TWODPATH)/base/movement.cpp
 	$(CC) $(OPTS) -c -o movement.o $(TWODPATH)/base/movement.cpp
+
+border.o: $(TWODPATH)/objects/border.h $(TWODPATH)/objects/border.cpp
+	$(CC) $(OPTS) -c -o border.o $(TWODPATH)/objects/border.cpp
 
 clean:
 	rm -f *.o

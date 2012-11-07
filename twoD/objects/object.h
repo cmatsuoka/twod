@@ -36,13 +36,14 @@ class twoDMovement;
 class twoDObject {
 protected:
 	int x = 0, y = 0;
-	int oldX = 0, oldY = 0;
+	int oldX = -1, oldY = -1;
 	int width = 0, height = 0;
 	int layer = 0;
 	int state = TWOD_STATE_STANDING;
 	bool visible = true;
 	bool collidable = true;
 	bool autoFixCollision = false;
+	bool autoRedirectCollision = false;
 	twoDMovement *movement = 0;
 
 	virtual void updatePosition() = 0;
@@ -70,6 +71,7 @@ public:
 	int getLayer(){ return this-> layer; }
 	int getState(){ return this->state; }
 	bool getAutoFixCollision(){ return this->autoFixCollision; }
+	bool getAutoRedirectCollision(){ return this->autoRedirectCollision; }
 	twoDMovement * getMovement(){ return this->movement; }
 	bool isVisible(){ return this->visible; }
 	bool isCollidable(){ return this->collidable; }
@@ -81,7 +83,12 @@ public:
 	void setVisible(bool v){ this->visible = v; }
 	void setCollidable(bool c){ this->collidable = c; }
 	void setAutoFixCollision(bool a){ this->autoFixCollision = a; }
+	void setAutoRedirectCollision(bool a){ this->autoRedirectCollision = a; }
 	void setOldPosition(int x, int y){ this->oldX = this->x; this->oldY = this->y; }
+	void setInitialPosition(int x, int y){ 
+		this->setPosition(x,y); 
+		this->setOldPosition(this->x, this->y);
+	}		
 	void setPosition(int x, int y){ 
 		this->oldX = this->x;
 		this->oldY = this->y;
