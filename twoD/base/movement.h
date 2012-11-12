@@ -61,6 +61,7 @@ public:
 	void accelDown(int a){ this->acceleration -= a; }
 	void turnRight();
 	void turnLeft();
+	void turnOpposite();
 	void stop();
 
 	// setters

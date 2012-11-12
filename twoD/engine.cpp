@@ -35,6 +35,7 @@ twoDEngine::twoDEngine(int width, int height){
 			this->layer[i][j] = NULL;
 
 	this->end = false;
+	this->mainObject = NULL;
 
 	al_init();
 	al_install_keyboard();
@@ -60,6 +61,21 @@ bool twoDEngine::addObject(twoDObject *obj){
 			return true;
 		}
 	return false;
+}
+
+bool twoDEngine::addMainObject(twoDObject *obj){
+	if(this->mainObject != NULL)
+		this->removeObject(this->mainObject);
+	if(this->addObject(obj)){
+		this->mainObject = obj;
+		return true;
+	}
+	return false;
+}
+
+bool twoDEngine::addMainObject(twoDObject *obj, int layer){
+	obj->setLayer(layer);
+	return this->addMainObject(obj);
 }
 
 void twoDEngine::checkLayerCollision(twoDObject *obj[], int num){

@@ -157,3 +157,10 @@ void twoDMovement::turnLeft(){
 	}
 }
 
+void twoDMovement::turnOpposite(){
+	this->turnRight();
+	this->turnRight();
+	this->turnRight();
+	this->turnRight();
+}
+

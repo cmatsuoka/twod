@@ -20,14 +20,18 @@
 #ifndef _TWODENGINE_H_
 #define _TWODENGINE_H_
 
+// XXX for debugging
+#include<iostream>
+using namespace std;
+
 // solve cross-reference
 class twoDObject;
 
 #include "objects/object.h"
 #include "base/background.h"
 
-#define TWOD_LAYERS 16
-#define TWOD_OBJ_PER_LAYER 32
+#define TWOD_LAYERS 30
+#define TWOD_OBJ_PER_LAYER 50
 
 // FPS
 const int TWOD_FPS = 60;
@@ -65,6 +69,7 @@ private:
 	bool end;
 	twoDBackground *background;
 	twoDObject *layer[TWOD_LAYERS][TWOD_OBJ_PER_LAYER];
+	twoDObject *mainObject;
 
 	// collision
 	void checkLayerCollision(twoDObject**,int); 
@@ -81,9 +86,16 @@ public:
 	bool addObject(twoDObject *);
 	bool addObject(twoDObject *, int);
 	twoDObject* removeObject(twoDObject *);
+	bool addMainObject(twoDObject*);
+	bool addMainObject(twoDObject *, int);
 
 	// setters
 	void setBackground(twoDBackground *b){ this->background = b; }
+
+	// getters
+	int getDisplayWidth(){ return this->displayWidth; };
+	int getDisplayHeight(){ return this->displayHeight; };
+	twoDObject * getMainObject(){ return this->mainObject; }
 };
 
 #endif

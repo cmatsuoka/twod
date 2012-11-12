@@ -18,15 +18,14 @@ I'm developing this on my free time, so things are going slowly :(
 - texturized primitives
 - movement support (speed, direction)
 - collision detection (simple version)
+- parallax scrolling
 
 *To be done:*
 - Physics (simple version)
 - tiles support (for map/background building)
-- parallax scrolling
 - menu generators
 
 *Future optimizations:*
-- enhanced movement (using angles instead of cardinal points)
 - multi-thread operations (for better performance)
 - error handling
 - enhanced physics
