@@ -43,8 +43,11 @@ void twoDMap::update(twoDEngine *engine){
 	mainLayer = 0;
 
 	if ((! this->scroll) && (! this->parallax))
+		// image stands still
 		speed = 0;
 	else {
+		// get speed, layer and direction of the main object
+
 		if(engine->getMainObject() == NULL){
 			speed = DEFAULT_SCROLL_SPEED;
 			mainLayer = this->layer;
@@ -53,7 +56,6 @@ void twoDMap::update(twoDEngine *engine){
 			mainLayer = engine->getMainObject()->getLayer();
 			speed = engine->getMainObject()->getMovement()->getSpeed();
 			dir = engine->getMainObject()->getMovement()->getDirection();
-
 		}
 		else {
 			speed = 0;
@@ -62,7 +64,9 @@ void twoDMap::update(twoDEngine *engine){
 		if(mainLayer == 0)
 			mainLayer = 1;
 
+		// calculates speed for the parallax effect
 		if(this->parallax){
+			// if scroll if set, the speed must be based on the main object 
 			if(this->scroll)
 				multiplier = (float)speed / mainLayer;
 			else
@@ -71,6 +75,7 @@ void twoDMap::update(twoDEngine *engine){
 		}
 	}
 
+	// scroll map based on the main object movement
 	if(this->scroll && (dir != TWOD_MOVE_DIRECTION_NONE)){
 		if((dir == TWOD_MOVE_DIRECTION_W) || (dir == TWOD_MOVE_DIRECTION_SW) || (dir == TWOD_MOVE_DIRECTION_NW))
 			dir = TWOD_MOVE_DIRECTION_E;

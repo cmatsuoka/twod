@@ -12,13 +12,13 @@ exec: all
 
 # example code
 $(TARGET): $(TARGET).cpp engine.o image.o color.o background.o sprite.o \
-	text.o sound.o primitive.o movement.o border.o map.o ctrl_square.o info.o
+	text.o sound.o primitive.o movement.o border.o map.o spaceship.o info.o
 	$(CC) $(OPTS) $(CFLAGS) -o $(TARGET) $(TARGET).cpp engine.o image.o \
 		color.o background.o sprite.o text.o sound.o primitive.o \
-		movement.o border.o map.o ctrl_square.o info.o
+		movement.o border.o map.o spaceship.o info.o
 
-ctrl_square.o: ctrl_square.h ctrl_square.cpp
-	$(CC) $(OPTS) -c -o ctrl_square.o ctrl_square.cpp
+spaceship.o: spaceship.h spaceship.cpp
+	$(CC) $(OPTS) -c -o spaceship.o spaceship.cpp
 
 info.o: info.h info.cpp
 	$(CC) $(OPTS) -c -o info.o info.cpp

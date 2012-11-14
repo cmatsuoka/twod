@@ -5,7 +5,7 @@ using namespace std;
 #include "../../twoD/engine.h"
 #include "../../twoD/base/image.h"
 #include "../../twoD/objects/map.h"
-#include "ctrl_square.h"
+#include "spaceship.h"
 #include "info.h"
 
 #define DISPLAY_WIDTH 800
@@ -19,27 +19,26 @@ using namespace std;
 #define MG_LAYER 15
 #define FG_LAYER 25
 
-#define SQUARE_SIZE 20
-#define SQUARE_X 190
-#define SQUARE_Y 290
-#define SQUARE_LAYER MG_LAYER
+#define SPACESHIP_X 190
+#define SPACESHIP_Y 290
+#define SPACESHIP_LAYER MG_LAYER
 
 #define INFO_TEXT string("A: increase speed     S: decrease speed     SPACE: stop     ARROWS: move")
 #define INFO_X 10
 #define INFO_Y 580
 #define INFO_LAYER 28
 
-// moving square example
+// spaceship with parallax background example
 int main(int argc, char *argv[]){
 	twoDEngine *engine;
 	twoDMap *bg, *mg, *fg;
-	controlledSquare *square;
+	spaceShip *spaceship;
 	infoWindow *info;
 
 	engine = new twoDEngine(DISPLAY_WIDTH, DISPLAY_HEIGHT);
 
-	square = new controlledSquare(SQUARE_SIZE, new twoDColor("blue"));
-	square->setInitialPosition(SQUARE_X,SQUARE_Y);
+	spaceship = new spaceShip();
+	spaceship->setInitialPosition(SPACESHIP_X,SPACESHIP_Y);
 
 	info = new infoWindow(INFO_TEXT, INFO_X, INFO_Y);
 
@@ -61,7 +60,7 @@ int main(int argc, char *argv[]){
 	fg->setRepeat(true);
 	fg->setScroll(true);
 
-	engine->addMainObject((twoDObject*)square, SQUARE_LAYER);
+	engine->addMainObject((twoDObject*)spaceship, SPACESHIP_LAYER);
 
 	engine->addObject((twoDObject*)info,INFO_LAYER);
 	engine->addObject((twoDObject*)bg,BG_LAYER);
