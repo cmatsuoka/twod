@@ -4,7 +4,7 @@ using namespace std;
 
 #include "../../twoD/engine.h"
 #include "../../twoD/base/image.h"
-#include "../../twoD/objects/map.h"
+#include "../../twoD/objects/image_map.h"
 #include "spaceship.h"
 #include "info.h"
 
@@ -31,7 +31,7 @@ using namespace std;
 // spaceship with parallax background example
 int main(int argc, char *argv[]){
 	twoDEngine *engine;
-	twoDMap *bg, *mg, *fg;
+	twoDImageMap *bg, *mg, *fg;
 	spaceShip *spaceship;
 	infoWindow *info;
 
@@ -42,19 +42,19 @@ int main(int argc, char *argv[]){
 
 	info = new infoWindow(INFO_TEXT, INFO_X, INFO_Y);
 
-	bg = new twoDMap();
+	bg = new twoDImageMap();
 	bg->setImage(new twoDImage(IMG_BG));
 	bg->setParallax(true);
 	bg->setRepeat(true);
 	bg->setScroll(true);
 
-	mg = new twoDMap();
+	mg = new twoDImageMap();
 	mg->setImage(new twoDImage(IMG_MG));
 	mg->setParallax(true);
 	mg->setRepeat(true);
 	mg->setScroll(true);
 
-	fg = new twoDMap();
+	fg = new twoDImageMap();
 	fg->setImage(new twoDImage(IMG_FG));
 	fg->setParallax(true);
 	fg->setRepeat(true);

@@ -17,8 +17,8 @@
  *
  * */
 
-#ifndef _TWODMAP_H_
-#define _TWODMAP_H_
+#ifndef _TWODIMAGEMAP_H_
+#define _TWODIMAGEMAP_H_
 
 #include "object.h"
 #include "../base/image.h"
@@ -26,7 +26,7 @@
 #define DEFAULT_PARALLAX_MULTIPLIER 10
 #define DEFAULT_SCROLL_SPEED 10
 
-class twoDMap: public twoDObject {
+class twoDImageMap: public twoDObject {
 	twoDImage *image;
 	bool scroll = false;
 	bool parallax = false;
@@ -34,7 +34,7 @@ class twoDMap: public twoDObject {
 	int parallaxMultiplier = DEFAULT_PARALLAX_MULTIPLIER;
 
 public:
-	twoDMap();
+	twoDImageMap();
 	void draw();
 	void update(twoDEngine*);
 	void collision(twoDObject*,int);

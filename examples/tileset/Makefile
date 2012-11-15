@@ -3,7 +3,7 @@ OPTS=-O3 -Wall -std=gnu++11
 CFLAGS=`pkg-config --cflags --libs allegro-5.0 allegro_image-5.0 allegro_font-5.0 \
 	allegro_ttf-5.0 allegro_audio-5.0 allegro_acodec-5.0 allegro_primitives-5.0`
 TWODPATH=../../twoD
-TARGET=parallax
+TARGET=tileset
 
 all: $(TARGET)
 
@@ -12,16 +12,11 @@ exec: all
 
 # example code
 $(TARGET): $(TARGET).cpp engine.o image.o color.o background.o sprite.o \
-	text.o sound.o primitive.o movement.o border.o image_map.o spaceship.o info.o
+	text.o sound.o primitive.o movement.o border.o tile_map.o \
+	tileset.o
 	$(CC) $(OPTS) $(CFLAGS) -o $(TARGET) $(TARGET).cpp engine.o image.o \
 		color.o background.o sprite.o text.o sound.o primitive.o \
-		movement.o border.o image_map.o spaceship.o info.o
-
-spaceship.o: spaceship.h spaceship.cpp
-	$(CC) $(OPTS) -c -o spaceship.o spaceship.cpp
-
-info.o: info.h info.cpp
-	$(CC) $(OPTS) -c -o info.o info.cpp
+		movement.o border.o tile_map.o tileset.o
 
 # twoD engine code
 engine.o: $(TWODPATH)/engine.h $(TWODPATH)/engine.cpp
@@ -51,11 +46,14 @@ primitive.o: $(TWODPATH)/base/primitive.h $(TWODPATH)/base/primitive.cpp
 movement.o: $(TWODPATH)/base/movement.h $(TWODPATH)/base/movement.cpp
 	$(CC) $(OPTS) -c -o movement.o $(TWODPATH)/base/movement.cpp
 
+tileset.o: $(TWODPATH)/base/tileset.h $(TWODPATH)/base/tileset.cpp
+	$(CC) $(OPTS) -c -o tileset.o $(TWODPATH)/base/tileset.cpp
+
 border.o: $(TWODPATH)/objects/border.h $(TWODPATH)/objects/border.cpp
 	$(CC) $(OPTS) -c -o border.o $(TWODPATH)/objects/border.cpp
 
-image_map.o: $(TWODPATH)/objects/image_map.h $(TWODPATH)/objects/image_map.cpp
-	$(CC) $(OPTS) -c -o image_map.o $(TWODPATH)/objects/image_map.cpp
+tile_map.o: $(TWODPATH)/objects/tile_map.h $(TWODPATH)/objects/tile_map.cpp
+	$(CC) $(OPTS) -c -o tile_map.o $(TWODPATH)/objects/tile_map.cpp
 
 clean:
 	rm -f *.o

@@ -52,7 +52,7 @@ twoDSprite::twoDSprite(string spritefile){
 
 	alpha = new twoDColor(alphaR, alphaG, alphaB);
 
-	image = (twoDImage**)malloc(sizeof(twoDImage*) * numImg);
+	image = new twoDImage*[numImg];
 	k = 0;
 	for(int i=0; i<numFiles; i++){
 		int numSubImg;

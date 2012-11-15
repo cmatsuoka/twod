@@ -17,11 +17,11 @@
  *
  * */
 
-#include "map.h"
+#include "image_map.h"
 
 static int displayWidth, displayHeight;
 
-twoDMap::twoDMap(){
+twoDImageMap::twoDImageMap(){
 	this->movement = new twoDMovement(TWOD_MOVE_DIRECTION_W, 0, 0);
 	this->visible = true;
 	this->collidable = false;
@@ -32,7 +32,7 @@ twoDMap::twoDMap(){
 	this->image = NULL;
 }
 
-void twoDMap::update(twoDEngine *engine){
+void twoDImageMap::update(twoDEngine *engine){
 	int speed, mainLayer, dir;
 	float multiplier;
 
@@ -118,7 +118,7 @@ void twoDMap::update(twoDEngine *engine){
 	this->movement->apply((twoDObject*)this);
 }
 
-void twoDMap::updatePosition(){
+void twoDImageMap::updatePosition(){
 	if(this->image == NULL)
 		return;
 
@@ -135,7 +135,7 @@ void twoDMap::updatePosition(){
 	}
 }
 
-void twoDMap::draw(){
+void twoDImageMap::draw(){
 	if(this->image == NULL)
 		return;
 
@@ -163,10 +163,10 @@ void twoDMap::draw(){
 	}
 }
 
-void twoDMap::collision(twoDObject *obj, int position){
+void twoDImageMap::collision(twoDObject *obj, int position){
 }
 
-void twoDMap::setImage(twoDImage *image){
+void twoDImageMap::setImage(twoDImage *image){
 	this->image = image;
 	this->width = image->getWidth();
 	this->height = image->getHeight();
