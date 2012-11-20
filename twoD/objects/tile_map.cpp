@@ -112,7 +112,6 @@ void twoDTileMap::update(twoDEngine *engine){
 	}
 	
 	this->movement->setSpeed(speed);
-	this->movement->update();
 	this->movement->apply((twoDObject*)this);
 }
 

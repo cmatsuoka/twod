@@ -88,11 +88,13 @@ void twoDSprite::draw(){
 	this->image[this->imgCount]->setPosition(this->x, this->y);
 	this->image[this->imgCount]->draw();
 
-	this->switchCount += (float)this->switchRate/TWOD_FPS;
+	if(this->running){
+		this->switchCount += (float)this->switchRate/TWOD_FPS;
 	
-	if(this->switchCount >= 1){
-		this->switchCount = 0;
-		this->imgCount = (this->imgCount + 1) % this->numImg;
+		if(this->switchCount >= 1){
+			this->switchCount = 0;
+			this->imgCount = (this->imgCount + 1) % this->numImg;
+		}
 	}
 }
 

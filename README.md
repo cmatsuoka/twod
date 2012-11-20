@@ -19,10 +19,10 @@ I'm developing this on my free time, so things are going slowly :(
 - movement support (speed, direction)
 - collision detection (simple version)
 - parallax scrolling
+- Physics (simple version)
 
 *To be done:*
-- Physics (simple version)
-- tiles support (for map/background building)
+- tiles support (for map/background building) *working*
 - menu generators
 
 *Future optimizations:*

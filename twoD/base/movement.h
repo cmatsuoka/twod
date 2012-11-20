@@ -29,6 +29,9 @@ class twoDObject;
 #define TWOD_MAX_SPEED 600
 #define TWOD_MOVE_STEP 1
 
+#define TWOD_DEFAULT_GRAVITY 8
+#define TWOD_DEFAULT_JUMP_SPEED 400
+
 enum TWOD_DIRECTIONS {
 	TWOD_MOVE_DIRECTION_N, // north
 	TWOD_MOVE_DIRECTION_E, // east
@@ -44,35 +47,58 @@ enum TWOD_DIRECTIONS {
 class twoDMovement {
 private:
 	int direction;
-	int speed; // pixels per second
-	int acceleration; 
+	int speed;
+	int gSpeed;
+	int jSpeed;
+	int accel;
+	int gAccel;
+	int jAccel;
 
+	bool gravity;
+	bool jumping;
+	int fallingCount;
 	float stepCount;
+	float gStepCount;
+	float jStepCount;
+
+	void init(int, int, int, bool);
+	void update();
 
 public:
+	twoDMovement();
+	twoDMovement(bool);
+	twoDMovement(int);
+	twoDMovement(int, int);
 	twoDMovement(int, int, int);
+	twoDMovement(int, int, int, bool);
 	~twoDMovement();
 
-	void update();
 	void apply(twoDObject*);
 	void speedUp(int s){ this->speed += s; }
 	void speedDown(int s){ this->speed -= s; }
-	void accelUp(int a){ this->acceleration += a; }
-	void accelDown(int a){ this->acceleration -= a; }
+	void accelUp(int a){ this->accel += a; }
+	void accelDown(int a){ this->accel -= a; }
 	void turnRight();
 	void turnLeft();
 	void turnOpposite();
+	void jump();
+	void stopFalling();
 	void stop();
 
 	// setters
 	void setDirection(int d){ this->direction = d; }
 	void setSpeed(int s){ this->speed = s; }
-	void setAcceleration(int a){ this->acceleration = a; }
+	void setAcceleration(int a){ this->accel = a; }
+	void setGravity(bool g){ this->gravity = g; }
+	void setGravityAcceleration(int g){ this->gAccel = g; }
+	void setJumpAcceleration(int j){ this->jAccel = j; }
 
 	// getters
 	int getDirection(){ return this->direction; }
 	int getSpeed(){ return this->speed; }
-	int getAcceleration(){ return this->acceleration; }
+	int getAcceleration(){ return this->accel; }
+	int getGravityAcceleration(){ return this->gAccel; }
+	bool getGravity(){ return this->gravity; }
 };
 
 #endif

@@ -3,7 +3,7 @@ OPTS=-O3 -Wall -std=gnu++11
 CFLAGS=`pkg-config --cflags --libs allegro-5.0 allegro_image-5.0 allegro_font-5.0 \
 	allegro_ttf-5.0 allegro_audio-5.0 allegro_acodec-5.0 allegro_primitives-5.0`
 TWODPATH=../../twoD
-TARGET=basic
+TARGET=platform
 
 all: $(TARGET)
 
@@ -11,14 +11,20 @@ exec: all
 	./$(TARGET)
 
 # example code
-$(TARGET): $(TARGET).cpp engine.o image.o color.o background.o test.o sprite.o \
-	text.o sound.o primitive.o movement.o border.o
+$(TARGET): $(TARGET).cpp engine.o image.o color.o background.o character.o sprite.o \
+	text.o sound.o primitive.o movement.o wall.o info.o border.o
 	$(CC) $(OPTS) $(CFLAGS) -o $(TARGET) $(TARGET).cpp engine.o image.o \
-		color.o background.o test.o sprite.o text.o sound.o primitive.o \
-		 movement.o border.o
+		color.o background.o character.o sprite.o text.o sound.o primitive.o \
+		movement.o wall.o info.o border.o
 
-test.o: test.h test.cpp
-	$(CC) $(OPTS) -c -o test.o test.cpp
+character.o: character.h character.cpp
+	$(CC) $(OPTS) -c -o character.o character.cpp
+
+wall.o: wall.h wall.cpp
+	$(CC) $(OPTS) -c -o wall.o wall.cpp
+
+info.o: info.h info.cpp
+	$(CC) $(OPTS) -c -o info.o info.cpp
 
 # twoD engine code
 engine.o: $(TWODPATH)/engine.h $(TWODPATH)/engine.cpp
@@ -46,10 +52,10 @@ primitive.o: $(TWODPATH)/base/primitive.h $(TWODPATH)/base/primitive.cpp
 	$(CC) $(OPTS) -c -o primitive.o $(TWODPATH)/base/primitive.cpp
 
 movement.o: $(TWODPATH)/base/movement.h $(TWODPATH)/base/movement.cpp
-	    $(CC) $(OPTS) -c -o movement.o $(TWODPATH)/base/movement.cpp
+	$(CC) $(OPTS) -c -o movement.o $(TWODPATH)/base/movement.cpp
 
 border.o: $(TWODPATH)/objects/border.h $(TWODPATH)/objects/border.cpp
-	    $(CC) $(OPTS) -c -o border.o $(TWODPATH)/objects/border.cpp
+	$(CC) $(OPTS) -c -o border.o $(TWODPATH)/objects/border.cpp
 
 clean:
 	rm -f *.o

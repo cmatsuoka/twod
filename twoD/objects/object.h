@@ -43,6 +43,7 @@ protected:
 	bool moved = false;
 	bool visible = true;
 	bool collidable = true;
+	bool platform = false;
 	bool autoFixCollision = false;
 	bool autoRedirectCollision = false;
 	twoDMovement *movement = 0;
@@ -77,6 +78,7 @@ public:
 	twoDMovement * getMovement(){ return this->movement; }
 	bool isVisible(){ return this->visible; }
 	bool isCollidable(){ return this->collidable; }
+	bool isPlatform(){ return this->platform; }
 	bool hasMoved(){ return this->moved; }
 
 	// setters
@@ -85,6 +87,7 @@ public:
 	void setState(int s){ this->state = s; }
 	void setVisible(bool v){ this->visible = v; }
 	void setCollidable(bool c){ this->collidable = c; }
+	void setPlatform(bool p){ this->platform = p; }
 	void setAutoFixCollision(bool a){ this->autoFixCollision = a; }
 	void setAutoRedirectCollision(bool a){ this->autoRedirectCollision = a; }
 	void setOldPosition(int x, int y){ this->oldX = this->x; this->oldY = this->y; }

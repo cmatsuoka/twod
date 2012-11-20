@@ -65,7 +65,6 @@ void controlledSquare::update(twoDEngine *engine){
 	else if(right)
 		dir = TWOD_MOVE_DIRECTION_E;
 
-	this->movement->update();
 	if(dir > -1){
 		this->movement->setDirection(dir);
 		this->movement->apply((twoDObject*)this);

@@ -36,6 +36,7 @@ private:
 	int switchRate;
 	int imgCount;
 	float switchCount;
+	bool running = true;
 
 public:
 	twoDSprite(string); // sprite definition file
@@ -43,6 +44,8 @@ public:
 
 	void draw(); // draw sprite
 	void move(int mx, int my){ this->x += mx; this->y += my; }
+	void start(){ this->running = true; }
+	void stop(){ this->running = false; }
 
 	// setters
 	void setSize(int,int);

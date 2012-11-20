@@ -561,8 +561,10 @@ void twoDEngine::autoFixCollision(twoDObject *obj1, twoDObject *obj2, int positi
 
 	if(onTop)
 		moveY = (obj2->getY() + obj2->getHeight()) - obj1Y;
-	else if(onBottom)
+	else if(onBottom){
 		moveY = obj2->getY() - (obj1Y + obj1H);
+		obj1->getMovement()->stopFalling();
+	}
 
 	obj1->move(moveX,moveY);
 	obj1->setOldPosition(obj1OldX, obj1OldY);
