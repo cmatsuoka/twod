@@ -57,6 +57,12 @@ movement.o: $(TWODPATH)/base/movement.h $(TWODPATH)/base/movement.cpp
 border.o: $(TWODPATH)/objects/border.h $(TWODPATH)/objects/border.cpp
 	$(CC) $(OPTS) -c -o border.o $(TWODPATH)/objects/border.cpp
 
+platform.o: $(TWODPATH)/objects/platform.h $(TWODPATH)/objects/platform.cpp
+	$(CC) $(OPTS) -c -o platform.o $(TWODPATH)/objects/platform.cpp
+
+block.o: $(TWODPATH)/objects/block.h $(TWODPATH)/objects/block.cpp
+	$(CC) $(OPTS) -c -o block.o $(TWODPATH)/objects/block.cpp
+
 clean:
 	rm -f *.o
 

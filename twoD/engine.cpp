@@ -82,6 +82,7 @@ void twoDEngine::checkLayerCollision(twoDObject *obj[], int num){
 	int i, j, pos1, pos2;
 	int obj1X, obj1Y, obj1W, obj1H, oldObj1X, oldObj1Y;
 	int obj2X, obj2Y, obj2W, obj2H;
+	int obj1Dir, obj2Dir;
 	bool xCollision, yCollision;
 
 	for(i=0; i<num; i++){
@@ -117,7 +118,19 @@ void twoDEngine::checkLayerCollision(twoDObject *obj[], int num){
 				xCollision = true;
 			
 			// Y axis
-			if((obj2Y >= obj1Y) && (obj2Y <= (obj1Y+obj1H-1)))
+			obj1Dir = obj[i]->getMovement()->getDirection();
+			obj2Dir = obj[j]->getMovement()->getDirection();
+			if(obj[j]->isPlatform() && ((obj1Dir == TWOD_MOVE_DIRECTION_N) || 
+										(obj1Dir == TWOD_MOVE_DIRECTION_NW) ||
+										(obj1Dir == TWOD_MOVE_DIRECTION_NE))){
+				yCollision = false;
+			}
+			else if(obj[i]->isPlatform() && ((obj2Dir == TWOD_MOVE_DIRECTION_N) || 
+										(obj2Dir == TWOD_MOVE_DIRECTION_NW) ||
+										(obj2Dir == TWOD_MOVE_DIRECTION_NE))){
+				yCollision = false;
+			}
+			else if((obj2Y >= obj1Y) && (obj2Y <= (obj1Y+obj1H-1)))
 				yCollision = true;
 			else if((obj1Y >= obj2Y) && (obj1Y <= (obj2Y+obj2H-1)))
 				yCollision = true;
