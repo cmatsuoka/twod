@@ -27,8 +27,8 @@ class twoDBlock: public twoDObject {
 	twoDImage *tile;
 
 public:
-	twoDBlock(int, int, twoDImage*);
-	twoDBlock(int, int, int, int);
+	twoDBlock(twoDImage*);
+	twoDBlock(int, int);
 	void draw();
 	void update(twoDEngine*);
 	void collision(twoDObject*,int);

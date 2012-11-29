@@ -19,34 +19,34 @@
 
 #include "block.h"
 
-twoDBlock::twoDBlock(int x, int y, twoDImage *tile){
+twoDBlock::twoDBlock(twoDImage *tile){
 	this->movement = new twoDMovement(TWOD_MOVE_DIRECTION_NONE, 0, 0);
 	this->platform = false;
 	this->visible = true;
 	this->collidable = true;
 	this->autoFixCollision = false;
-	this->x = x;
-	this->y = y;
 	this->tile = tile;
 	this->width = this->tile->getWidth();
 	this->height = this->tile->getHeight();
-	this->oldX = this->x;
-	this->oldY = this->y;
+	this->x = 0;
+	this->y = 0;
+	this->oldX = 0;
+	this->oldY = 0;
 }
 
-twoDBlock::twoDBlock(int x, int y, int w, int h){
+twoDBlock::twoDBlock(int w, int h){
 	this->movement = new twoDMovement(TWOD_MOVE_DIRECTION_NONE, 0, 0);
 	this->platform = false;
 	this->visible = false;
 	this->collidable = true;
 	this->autoFixCollision = false;
-	this->x = x;
-	this->y = y;
 	this->tile = NULL;
 	this->width = w;
 	this->height = h;
-	this->oldX = this->x;
-	this->oldY = this->y;
+	this->x = 0;
+	this->y = 0;
+	this->oldX = 0;
+	this->oldY = 0;
 }
 
 void twoDBlock::update(twoDEngine *engine){

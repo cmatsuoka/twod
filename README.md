@@ -20,9 +20,10 @@ I'm developing this on my free time, so things are going slowly :(
 - collision detection (simple version)
 - parallax scrolling
 - Physics (simple version)
+- Object factory (to be used with TMX files)
 
 *To be done:*
-- tiles support (for map/background building) *working*
+- map building using TMX files from the 'Tiled' software *working*
 - menu generators
 
 *Future optimizations:*

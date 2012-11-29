@@ -17,22 +17,20 @@
  *
  * */
 
-#ifndef _TWODPLATFORM_H_
-#define _TWODPLATFORM_H_
+#ifndef _TWODFACTORY_H_
+#define _TWODFACTORY_H_
 
-#include "object.h"
-#include "../base/image.h"
+#include "objects/object.h"
 
-class twoDPlatform: public twoDObject {
-	twoDImage *tile;
+#include<string>
+#include<map>
+using namespace std;
+
+class twoDFactory {
+protected:
 
 public:
-	twoDPlatform(twoDImage*);
-	twoDPlatform(int, int);
-	void draw();
-	void update(twoDEngine*);
-	void collision(twoDObject*,int);
-	void updatePosition();
+	virtual twoDObject * createObject(map<string, void *>) = 0;
 };
 
 #endif

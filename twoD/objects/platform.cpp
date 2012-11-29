@@ -19,34 +19,34 @@
 
 #include "platform.h"
 
-twoDPlatform::twoDPlatform(int x, int y, twoDImage *tile){
+twoDPlatform::twoDPlatform(twoDImage *tile){
 	this->movement = new twoDMovement(TWOD_MOVE_DIRECTION_NONE, 0, 0);
 	this->platform = true;
 	this->visible = true;
 	this->collidable = true;
 	this->autoFixCollision = false;
-	this->x = x;
-	this->y = y;
 	this->tile = tile;
 	this->width = this->tile->getWidth();
 	this->height = this->tile->getHeight();
-	this->oldX = this->x;
-	this->oldY = this->y;
+	this->x = 0;
+	this->y = 0;
+	this->oldX = 0;
+	this->oldY = 0;
 }
 
-twoDPlatform::twoDPlatform(int x, int y, int w, int h){
+twoDPlatform::twoDPlatform(int w, int h){
 	this->movement = new twoDMovement(TWOD_MOVE_DIRECTION_NONE, 0, 0);
 	this->platform = true;
 	this->visible = false;
 	this->collidable = true;
 	this->autoFixCollision = false;
-	this->x = x;
-	this->y = y;
 	this->tile = NULL;
 	this->width = w;
 	this->height = h;
-	this->oldX = this->x;
-	this->oldY = this->y;
+	this->x = 0;
+	this->y = 0;
+	this->oldX = 0;
+	this->oldY = 0;
 }
 
 void twoDPlatform::update(twoDEngine *engine){
