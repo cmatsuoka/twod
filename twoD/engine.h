@@ -79,15 +79,18 @@ private:
 
 public:
 	twoDEngine(int width, int height);
+	// TODO twoDEngine(twoDController*, twoDFactory*);
 	~twoDEngine();
 	void main();
 	void finish();
 	bool keyPressed(int);
 	bool addObject(twoDObject *);
 	bool addObject(twoDObject *, int);
-	twoDObject* removeObject(twoDObject *);
 	bool addMainObject(twoDObject*);
 	bool addMainObject(twoDObject *, int);
+	twoDObject* removeObject(twoDObject *);
+	// TODO void removeAllObjects();
+	// TODO	void removeAllObjects(bool);
 
 	// setters
 	void setBackground(twoDBackground *b){ this->background = b; }

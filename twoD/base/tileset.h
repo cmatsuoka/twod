@@ -20,6 +20,7 @@
 #ifndef _TWODTILESET_H_
 #define _TWODTILESET_H_
 
+#include<string>
 #include "image.h"
 
 class twoDTileset {

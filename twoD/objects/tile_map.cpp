@@ -127,13 +127,13 @@ void twoDTileMap::updatePosition(){
 		moveX = this->x - this->oldX;
 
 		// tile reset
-		list<twoDImage*>::iterator i;
+		list<twoDMapTile*>::iterator i;
 		for(i=this->tiles.begin(); i != this->tiles.end(); i++){
 			int x, w;
-
-			(*i)->move(moveX, 0);
-			x = (*i)->getX();
-			w = (*i)->getWidth();
+			
+			(*i)->x += moveX;
+			x = (*i)->x;
+			w = (*i)->image->getWidth();
 			
 			if((x + w) <= 0)
 				x = x + displayWidth;
@@ -141,41 +141,49 @@ void twoDTileMap::updatePosition(){
 			if(x >= displayWidth)
 				x = 0;
 
-			(*i)->setPosition(x, (*i)->getY());
+			(*i)->x = x;
 		}
 	}
 }
 
 void twoDTileMap::draw(){
+	int x, y;
+
 	if(this->repeat){
 		// draw tiles
-		list<twoDImage*>::iterator i;
-		int x, w;
+		list<twoDMapTile*>::iterator i;
+		int w;
 		for(i=this->tiles.begin(); i != this->tiles.end(); i++){
-			(*i)->draw();
-			x = (*i)->getX();
-			w = (*i)->getWidth();
+			x = (*i)->x;
+			y = (*i)->y;
+			w = (*i)->image->getWidth();
+
+			(*i)->image->setPosition(x, y);
+			(*i)->image->draw();
 
 			// loop tiles to the left
 			if(x <= 0){
-				(*i)->setPosition(x + displayWidth, (*i)->getY());
-				(*i)->draw();
-				(*i)->setPosition(x, (*i)->getY());
+				(*i)->image->setPosition(x + displayWidth, y);
+				(*i)->image->draw();
+//				(*i)->image->setPosition(x, y);
 			}
 			
 			// loop tiles to the right
 			if((x + w) >= displayWidth){
-				(*i)->setPosition(x - displayWidth, (*i)->getY());
-				(*i)->draw();
-				(*i)->setPosition(x, (*i)->getY());
+				(*i)->image->setPosition(x - displayWidth, y);
+				(*i)->image->draw();
+//				(*i)->image->setPosition(x, y);
 			}
 		}
 	}
 	else {
 		// draw tiles
-		list<twoDImage*>::iterator i;
+		list<twoDMapTile*>::iterator i;
 		for(i=this->tiles.begin(); i != this->tiles.end(); i++){
-			(*i)->draw();
+			x = (*i)->x;
+			y = (*i)->y;
+			(*i)->image->setPosition(x, y);
+			(*i)->image->draw();
 		}
 	}
 }
@@ -183,37 +191,40 @@ void twoDTileMap::draw(){
 void twoDTileMap::collision(twoDObject *obj, int position){
 }
 
-void twoDTileMap::addTile(twoDImage *tile, int x, int y){
-	tile->setPosition(x,y);
+void twoDTileMap::addTile(twoDImage *img, int x, int y){
+	twoDMapTile *tile = new twoDMapTile;
+	tile->x = x;
+	tile->y = y;
+	tile->image = img;
 	this->addTile(tile);
 }
 
-void twoDTileMap::addTile(twoDImage *tile){
+void twoDTileMap::addTile(twoDMapTile *tile){
 	if(this->tiles.empty()){
-		this->setInitialPosition(tile->getX(), tile->getY());
-		this->width = tile->getWidth();
-		this->height = tile->getHeight();
+		this->setInitialPosition(tile->x, tile->y);
+		this->width = tile->image->getWidth();
+		this->height = tile->image->getHeight();
 	}
 
 	this->tiles.push_back(tile);
 
 	// update the map position and size to match the new tile inserted
-	if(tile->getX() < this->x){
-		this->width += (this->x - tile->getX());
-		this->x = tile->getX();
+	if(tile->x < this->x){
+		this->width += (this->x - tile->x);
+		this->x = tile->x;
 	}
 	
-	if(tile->getY() < this->y){
-		this->height += (this->y - tile->getY());
-		this->y = tile->getY();
+	if(tile->y < this->y){
+		this->height += (this->y - tile->y);
+		this->y = tile->y;
 	}
 	
-	if((tile->getX() + tile->getWidth()) > (this->x + this->width)){
-		this->width += ((tile->getX() + tile->getWidth()) - (this->x + this->width));
+	if((tile->x + tile->image->getWidth()) > (this->x + this->width)){
+		this->width += ((tile->x + tile->image->getWidth()) - (this->x + this->width));
 	}
 	
-	if((tile->getY() + tile->getHeight()) > (this->y + this->height)){
-		this->height += ((tile->getY() + tile->getHeight()) - (this->y + this->height));
+	if((tile->y + tile->image->getHeight()) > (this->y + this->height)){
+		this->height += ((tile->y + tile->image->getHeight()) - (this->y + this->height));
 	}
 }
 

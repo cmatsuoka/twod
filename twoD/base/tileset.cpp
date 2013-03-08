@@ -66,7 +66,10 @@ twoDImage * twoDTileset::getTile(int x){
 		w = this->tileWidth;
 		h = this->tileHeight;
 		s = this->spacing;
-		imgW = this->tileset->getWidth();
+
+		/* some images do not have the proper width,
+		 * i.e. number of tiles * (tile width + spacing) */
+		imgW = (this->tileset->getWidth()/(w+s)) * (w+s);
 
 		while(i != id){
 			x = x + w + s;

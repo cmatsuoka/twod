@@ -29,8 +29,13 @@ using namespace std;
 #define DEFAULT_PARALLAX_MULTIPLIER 10
 #define DEFAULT_SCROLL_SPEED 10
 
+typedef struct {
+	int x, y;
+	twoDImage *image;
+} twoDMapTile;
+
 class twoDTileMap: public twoDObject {
-	list<twoDImage*> tiles;
+	list<twoDMapTile*> tiles;
 	bool scroll = false;
 	bool parallax = false;
 	bool repeat = false;
@@ -43,7 +48,7 @@ public:
 	void collision(twoDObject*,int);
 	void updatePosition();
 
-	void addTile(twoDImage*);
+	void addTile(twoDMapTile*);
 	void addTile(twoDImage*, int, int);
 
 	// setters

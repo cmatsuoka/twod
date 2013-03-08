@@ -23,8 +23,15 @@ I'm developing this on my free time, so things are going slowly :(
 - Object factory (to be used with TMX files)
 
 *To be done:*
-- map building using TMX files from the 'Tiled' software *working*
+- map building using TMX files from the 'Tiled' software (*working*)
 - menu generators
+- game example
+- read all parameters from a configuration file (instead of hardcoded)
+- port to SDL (instead of allegro)
+- turn into a library
+- optimizations
+- documentation using doxygen
+- build using automake/autoconf or cmake
 
 *Future optimizations:*
 - multi-thread operations (for better performance)
