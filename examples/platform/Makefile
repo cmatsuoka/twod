@@ -13,9 +13,9 @@ exec: all
 # example code
 $(TARGET): $(TARGET).cpp engine.o image.o color.o background.o character.o sprite.o \
 	text.o sound.o primitive.o movement.o wall.o info.o border.o
-	$(CC) $(OPTS) $(CFLAGS) -o $(TARGET) $(TARGET).cpp engine.o image.o \
+	$(CC) $(OPTS) -o $(TARGET) $(TARGET).cpp engine.o image.o \
 		color.o background.o character.o sprite.o text.o sound.o primitive.o \
-		movement.o wall.o info.o border.o
+		movement.o wall.o info.o border.o $(CFLAGS)
 
 character.o: character.h character.cpp
 	$(CC) $(OPTS) -c -o character.o character.cpp

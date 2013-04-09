@@ -14,9 +14,9 @@ exec: all
 $(TARGET): $(TARGET).cpp engine.o image.o color.o background.o sprite.o \
 	text.o sound.o primitive.o movement.o border.o tile_map.o \
 	tileset.o
-	$(CC) $(OPTS) $(CFLAGS) -o $(TARGET) $(TARGET).cpp engine.o image.o \
+	$(CC) $(OPTS) -o $(TARGET) $(TARGET).cpp engine.o image.o \
 		color.o background.o sprite.o text.o sound.o primitive.o \
-		movement.o border.o tile_map.o tileset.o
+		movement.o border.o tile_map.o tileset.o $(CFLAGS)
 
 # twoD engine code
 engine.o: $(TWODPATH)/engine.h $(TWODPATH)/engine.cpp

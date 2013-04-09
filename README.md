@@ -17,9 +17,8 @@ I'm developing this on my free time, so things are going slowly :(
 - primitives support
 - texturized primitives
 - movement support (speed, direction)
-- collision detection (simple version)
 - parallax scrolling
-- Physics (simple version)
+- Physics (simple version: collision, gravity and bounce)
 - Object factory (to be used with TMX files)
 
 *To be done:*
@@ -36,9 +35,8 @@ I'm developing this on my free time, so things are going slowly :(
 *Future optimizations:*
 - multi-thread operations (for better performance)
 - error handling
-- enhanced physics
+- enhanced physics (Box2D)
 - make sure no memory is leaking
-- enhanced collision detection
 
 Yeah, there's still a long way to go :D
 

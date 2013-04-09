@@ -13,9 +13,9 @@ exec: all
 # example code
 $(TARGET): $(TARGET).cpp engine.o image.o color.o background.o test.o sprite.o \
 	text.o sound.o primitive.o movement.o border.o
-	$(CC) $(OPTS) $(CFLAGS) -o $(TARGET) $(TARGET).cpp engine.o image.o \
+	$(CC) $(OPTS) -o $(TARGET) $(TARGET).cpp engine.o image.o \
 		color.o background.o test.o sprite.o text.o sound.o primitive.o \
-		 movement.o border.o
+		 movement.o border.o $(CFLAGS)
 
 test.o: test.h test.cpp
 	$(CC) $(OPTS) -c -o test.o test.cpp
