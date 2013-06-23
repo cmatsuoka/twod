@@ -1,4 +1,6 @@
 cmake_minimum_required (VERSION 2.8.1)
+include_directories(../../twoD/base ../../twoD/objects)
+link_directories(../../twoD)
 project(libtwod-examples-parallax)
 include(../common.cmake)
 add_executable(parallax
@@ -6,5 +8,4 @@ add_executable(parallax
 	parallax.cpp
 	spaceship.cpp
 )
-include_directories(../../twoD/base ../../twoD/objects)
 target_link_libraries(parallax libtwod.so)
