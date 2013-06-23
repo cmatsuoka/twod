@@ -1,5 +1,6 @@
 cmake_minimum_required (VERSION 2.8.1)
 project(libtwod-examples-platform)
+include(../common.cmake)
 add_executable(platform
 	character.cpp
 	info.cpp

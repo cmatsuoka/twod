@@ -1,6 +1,11 @@
 cmake_minimum_required (VERSION 2.6)
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake-modules/")
 project(libtwod)
+
+if(CMAKE_COMPILER_IS_GNUCXX)
+    set(CMAKE_CXX_FLAGS "-Wall -g -O2 -std=c++11")
+endif()
+
 find_package(Allegro REQUIRED)
 set(LIBS ${LIBS} ${ALLEGRO_LIBRARIES})
 add_library(twod SHARED
